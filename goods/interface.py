@@ -266,7 +266,7 @@ def packed_create_borrow(request, *args, **kwargs):
 def packed_find_borrow(request, *args, **kwargs):
     return find_borrow(*args, **kwargs)
 
-def packed_update_borrow(request, *args, **kwargs):
+def packed_update_borrow(request, *args, **kwargs):  
     desc = ''
     if 'log' in kwargs:
         desc = kwargs.pop('log')

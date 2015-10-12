@@ -69,10 +69,10 @@ log_list_func = {
     'user':get_account_loglist_context,
     'borrow':get_borrow_loglist_context
 }
-
+    
 
 @method_required('GET')
-@permission_required(PERM_VIEW_ALL)
+@login_required       
 def show_log(request):
     try:
         g = request.GET
@@ -80,12 +80,29 @@ def show_log(request):
         if 'is_actor' in g:
             is_actor = g['is_actor']
         llist = log_list_func[g['type']](g['id'], is_actor)
-        return render(request, 'log.html', {
-            'user':get_context_user(request.user),
-            'logs': llist
-            })
+        
+        def show_all_log():
+            return render(request, 'log.html', {
+                'user':get_context_user(request.user),
+                'logs': llist
+                })
+        
+        def show_repair_log():
+            return show_all_log()
+        
+        @permission_required(PERM_VIEW_ALL)
+        def show_other_log():
+            return show_all_log()
+        
+        if g['type'] == 'borrow': #还需判断user是否是借用人
+            return show_repair_log()
+        else:
+            return show_other_log()
+        
     except Exception as e:
         return show_message(request, 'Show log Error: ' + e.__str__())
+        
+        
 
 
 
