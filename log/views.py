@@ -91,13 +91,13 @@ def show_log(request):
             return show_all_log()
         
         @permission_required(PERM_VIEW_ALL)
-        def show_other_log():
+        def show_other_log(request):
             return show_all_log()
         
-        if g['type'] == 'borrow': #还需判断user是否是借用人
+        if g['type'] == 'borrow'and Borrow.objects.get(id=g['id']).account.user == request.user: #判断是否是借用人
             return show_repair_log()
         else:
-            return show_other_log()
+            return show_other_log(request)
         
     except Exception as e:
         return show_message(request, 'Show log Error: ' + e.__str__())
