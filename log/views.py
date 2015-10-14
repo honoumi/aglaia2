@@ -29,9 +29,9 @@ def get_context_log(lg):
     dc['desc'] = lg.description
     return dc
 
-def get_borrow_loglist_context(id, is_actor):
+def get_borrow_loglist_context(id, is_actor):        
     l = LogBorrow.objects.filter(target__id=id).order_by('time')
-    return get_context_list(l, get_context_log)
+    return get_context_list(l, lambda lg: dict(get_context_log(lg), repair_record = lg.repair_record))
 
 def get_computing_loglist_context(id, is_actor):
     l = LogComputing.objects.filter(target__id=id).order_by('time')

@@ -365,6 +365,9 @@ def do_finish_repair(request):
         if not brw.single.status == REPAIRING_KEY:
             return show_message(request, 'The good is not in a repairing status!')
 
+ #       if 'repair_record' in request.POST:   
+ #           request.POST['repair_record'] = brw.manager_note + request.POST['repair_record']
+
         packed_update_borrow(request, id, {'status':FINISH_REPAIR_KEY, 'user_note':note}, log=get_finish_repair_log())
         send_notify_mail(request, FinishRepairMail, borrow=brw)
 

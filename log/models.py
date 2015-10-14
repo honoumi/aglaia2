@@ -31,6 +31,7 @@ class LogBorrow(models.Model):
     action = models.CharField(max_length=100)
     time = models.DateTimeField()
     description = models.CharField(max_length=500)
+    repair_record = models.CharField(max_length=2000)  
     def get_target_str(self):
         return self.target.single.sn
 
