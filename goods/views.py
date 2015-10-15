@@ -356,7 +356,7 @@ def do_start_repair(request):
 def do_finish_repair(request):
     try:
         id = request.POST['id']        
-        note = '' 
+        note = request.POST['note']
 
         brw = Borrow.objects.get(id=id)
 
@@ -369,7 +369,8 @@ def do_finish_repair(request):
         if 'repair_record' in request.POST:    
             repair_record = request.POST['repair_record']
             if 'repair_record2' in request.POST:
-                repair_record = '故障原因: ' + repair_record + '解决办法: ' + request.POST['repair_record2']
+                repair_record = '故障现象: ' + note + '  ' + '故障原因: ' + repair_record \
+                               + '  ' +'解决办法: ' + request.POST['repair_record2']
   
         packed_update_borrow(request, id, {'status':FINISH_REPAIR_KEY, 'user_note':note}, 
                              log=get_finish_repair_log(), repair_record = repair_record)
@@ -395,7 +396,7 @@ def do_return_repair(request):
         if not brw.single.status == REPAIRING_KEY:
             return show_message(request, 'The good is not in a repairing status!')
 
-        packed_update_borrow(request, id, {'status':BORROWED_KEY, 'user_note':note}, log=get_ret_repaired_log())
+        packed_update_borrow(request, id, {'status':BORROWED_KEY, 'manager_note':note}, log=get_ret_repaired_log())
         packed_update_single(request, brw.single.id, {'status':BORROWED_KEY}, log=get_good_repaired_log())
 
         return HttpResponseRedirect(reverse('goods.views.show_manage'))
@@ -535,7 +536,8 @@ def do_repair_goods(request):
         if not brw.single.status == BORROWED_KEY:
             return show_message(request, 'The good is not in a borrowed status!')
 
-        packed_update_borrow(request, id, {'status':REPAIR_APPLY_KEY, 'manager_note':note}, log=get_repair_apply_log())
+        packed_update_borrow(request, id, {'status':REPAIR_APPLY_KEY, 'manager_note':note, 'user_note':note}, 
+                             log=get_repair_apply_log(), repair_record = '故障现象: ' + note)
         send_notify_mail(request, RepairRequstMail, borrow=brw)
 
         return HttpResponseRedirect(reverse('goods.views.show_borrow'))
