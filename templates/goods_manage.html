@@ -358,7 +358,7 @@
 			<th>SN</th>
 			<th>实物</th>
 			<th>借用者</th>
-			<th>说明</th>
+			<th>故障现象</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -385,8 +385,9 @@
 			                        <input type="text" placeholder="实物名称" name="name" value="{{item.goods_name}}" disabled>
 			                    </div>
 			                    <div class="field">
-			                        <label><font color="#FFFFFF">说明</font></label>
-			                        <input type="text" name="note">
+			                        <label><font color="#FFFFFF">故障现象</font></label>
+			                        <input type="text" name="note" value="{{item.note}}" >
+			                    </div>
 			                    </div>
 			                  </div>
 			                  <button type="submit" class="ui tiny circular button floated right fluid positive">同意</button>
@@ -409,8 +410,8 @@
 			                        <input type="text" placeholder="实物名称" name="name" value="{{item.goods_name}}" disabled>
 			                    </div>
 			                    <div class="field">
-			                        <label><font color="#FFFFFF">说明</font></label>
-			                        <input type="text" name="note">
+			                        <label><font color="#FFFFFF">故障现象</font></label>
+			                        <input type="text" name="note" value="{{item.note}}" >
 			                    </div>
 			                  </div>
 			                  <button type="submit" class="ui tiny circular button floated right fluid negative">拒绝</button>
@@ -432,7 +433,7 @@
 			<th>SN</th>
 			<th>实物</th>
 			<th>借用者</th>
-			<th>说明</th>
+			<th>故障现象</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -459,8 +460,8 @@
 			                        <input type="text" placeholder="实物名称" name="name" value="{{item.goods_name}}" disabled>
 			                    </div>
 			                    <div class="field">
-			                        <label><font color="#FFFFFF">说明</font></label>
-			                        <input type="text" name="note">
+			                        <label><font color="#FFFFFF">故障现象</font></label>
+			                        <input type="text" name="note" value="{{item.note}}" >
 			                    </div>
 			                  </div>
 			                  <button type="submit" class="ui tiny circular button floated right fluid positive">确认</button>
@@ -481,7 +482,7 @@
 			<th>SN</th>
 			<th>实物</th>
 			<th>借用者</th>
-			<th>说明</th>
+			<th>故障现象</th>
 			<th>操作</th>
 		</tr>
 	</thead>
@@ -507,10 +508,17 @@
 			                        <label><font color="#FFFFFF">实物名称</font></label>
 			                        <input type="text" placeholder="实物名称" name="name" value="{{item.goods_name}}" disabled>
 			                    </div>
-			                    <div class="field">
-			                        <label><font color="#FFFFFF">说明</font></label>
-			                        <input type="text" name="note">
+                                <div class="field">
+			                        <label><font color="#FFFFFF">故障现象</font></label>
+			                        <input type="text" name="note" value="{{item.note}}" >
 			                    </div>
+                                 <div class="field">
+			                        <label><font color="#FFFFFF">故障原因</font></label>
+			                        <input type="text" name="repair_record">
+			                    </div>
+                                  <div class="field">
+			                        <label><font color="#FFFFFF">解决办法</font></label>
+			                        <input type="text" name="repair_record2">
 			                  </div>
 			                  <button type="submit" class="ui tiny circular button floated right fluid positive">确认</button>
 		                  </form>
