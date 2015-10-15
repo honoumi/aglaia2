@@ -276,7 +276,7 @@ def packed_update_borrow(request, *args, **kwargs):
         desc = args[1]
     
     repair_record = ''
-    if repair_record in kwargs:
+    if 'repair_record' in kwargs:
         repair_record = kwargs.pop('repair_record')
     
     ret = update_borrow(*args, **kwargs)
