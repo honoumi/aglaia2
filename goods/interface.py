@@ -282,7 +282,7 @@ def packed_update_borrow(request, *args, **kwargs):
     ret = update_borrow(*args, **kwargs)
     create_log('borrow', user_id = request.user.id,
         target=ret, action='update borrow',
-        description = {'description' : desc, 'repair_record' : repair_record} )
+        description = desc, repair_record = repair_record )
     return ret
  
 def packed_delete_borrow(request, *args, **kwargs):

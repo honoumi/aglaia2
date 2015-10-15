@@ -458,7 +458,7 @@ def do_destroy(request):
 @method_required('POST')
 @permission_required(PERM_NORMAL)
 def do_borrow(request):
-    try:
+#    try:
         id = request.POST['id']
         note = request.POST['note']
 
@@ -471,8 +471,8 @@ def do_borrow(request):
         send_notify_mail(request, BrwRequstMail, borrow=brw)
 
         return HttpResponseRedirect(reverse("goods.views.show_borrow"))
-    except Exception as e:
-        return show_message(request, 'Borrow request failed: ' + e.__str__())
+#    except Exception as e:
+#        return show_message(request, 'Borrow request failed: ' + e.__str__())
 
 
 @method_required('POST')
