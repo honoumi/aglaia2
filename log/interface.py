@@ -29,12 +29,14 @@ def create_computing_log(user_id, target, action, description):
         raise e
 
 
-def create_borrow_log(user_id, target, action, description):
+def create_borrow_log(user_id, target, action, description, repair_record = ''):
     try:
         logBorrow = LogBorrow(user_id=user_id,
                               target=target, action=action,
                               time=datetime.now(),
-                              description=description)
+                              description=description,
+                              repair_record = repair_record
+                              )
         logBorrow.save()
     except Exception as e:
         raise e

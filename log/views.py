@@ -29,9 +29,9 @@ def get_context_log(lg):
     dc['desc'] = lg.description
     return dc
 
-def get_borrow_loglist_context(id, is_actor):
+def get_borrow_loglist_context(id, is_actor):        
     l = LogBorrow.objects.filter(target__id=id).order_by('time')
-    return get_context_list(l, get_context_log)
+    return get_context_list(l, lambda lg: dict(get_context_log(lg), repair_record = lg.repair_record))
 
 def get_computing_loglist_context(id, is_actor):
     l = LogComputing.objects.filter(target__id=id).order_by('time')
@@ -69,10 +69,10 @@ log_list_func = {
     'user':get_account_loglist_context,
     'borrow':get_borrow_loglist_context
 }
-
+    
 
 @method_required('GET')
-@permission_required(PERM_VIEW_ALL)
+@login_required       
 def show_log(request):
     try:
         g = request.GET
@@ -80,12 +80,29 @@ def show_log(request):
         if 'is_actor' in g:
             is_actor = g['is_actor']
         llist = log_list_func[g['type']](g['id'], is_actor)
-        return render(request, 'log.html', {
-            'user':get_context_user(request.user),
-            'logs': llist
-            })
+        
+        def show_all_log():
+            return render(request, 'log.html', {
+                'user':get_context_user(request.user),
+                'logs': llist
+                })
+        
+        def show_repair_log():
+            return show_all_log()
+        
+        @permission_required(PERM_VIEW_ALL)
+        def show_other_log(request):
+            return show_all_log()
+        
+        if g['type'] == 'borrow'and Borrow.objects.get(id=g['id']).account.user == request.user: #判断是否是借用人
+            return show_repair_log()
+        else:
+            return show_other_log(request)
+        
     except Exception as e:
         return show_message(request, 'Show log Error: ' + e.__str__())
+        
+        
 
 
 
