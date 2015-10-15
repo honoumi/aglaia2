@@ -266,7 +266,7 @@ def packed_create_borrow(request, *args, **kwargs):
 def packed_find_borrow(request, *args, **kwargs):
     return find_borrow(*args, **kwargs)
 
-def packed_update_borrow(request, *args, **kwargs):
+def packed_update_borrow(request, *args, **kwargs):  
     desc = ''
     if 'log' in kwargs:
         desc = kwargs.pop('log')
@@ -274,12 +274,17 @@ def packed_update_borrow(request, *args, **kwargs):
         desc = kwargs['update_content']
     else:
         desc = args[1]
+    
+    repair_record = ''
+    if repair_record in kwargs:
+        repair_record = kwargs.pop('repair_record')
+    
     ret = update_borrow(*args, **kwargs)
     create_log('borrow', user_id = request.user.id,
         target=ret, action='update borrow',
-        description=desc)
+        description = desc, repair_record = repair_record )
     return ret
-
+ 
 def packed_delete_borrow(request, *args, **kwargs):
     return delete_borrow(*args, **kwargs)
 
