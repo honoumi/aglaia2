@@ -355,8 +355,8 @@ def do_start_repair(request):
 @permission_required(PERM_GOODS_AUTH)
 def do_finish_repair(request):
     try:
-        id = request.POST['id']
-        note = request.POST['note']
+        id = request.POST['id']        
+        note = '' 
 
         brw = Borrow.objects.get(id=id)
 
@@ -364,11 +364,15 @@ def do_finish_repair(request):
             return show_message(request, 'This Request is not in a repairing status!')
         if not brw.single.status == REPAIRING_KEY:
             return show_message(request, 'The good is not in a repairing status!')
-
- #       if 'repair_record' in request.POST:   
- #           request.POST['repair_record'] = brw.manager_note + request.POST['repair_record']
-
-        packed_update_borrow(request, id, {'status':FINISH_REPAIR_KEY, 'user_note':note}, log=get_finish_repair_log())
+  
+        repair_record = ''
+        if 'repair_record' in request.POST:    
+            repair_record = request.POST['repair_record']
+            if 'repair_record2' in request.POST:
+                repair_record = '故障原因: ' + repair_record + '解决办法: ' + request.POST['repair_record2']
+  
+        packed_update_borrow(request, id, {'status':FINISH_REPAIR_KEY, 'user_note':note}, 
+                             log=get_finish_repair_log(), repair_record = repair_record)
         send_notify_mail(request, FinishRepairMail, borrow=brw)
 
         return HttpResponseRedirect(reverse('goods.views.show_manage'))

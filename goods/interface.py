@@ -276,8 +276,8 @@ def packed_update_borrow(request, *args, **kwargs):
         desc = args[1]
     
     repair_record = ''
-    if 'repair_record' in request.POST:    
-        repair_record = request.POST['repair_record']
+    if repair_record in kwargs:
+        repair_record = kwargs.pop('repair_record')
     
     ret = update_borrow(*args, **kwargs)
     create_log('borrow', user_id = request.user.id,
