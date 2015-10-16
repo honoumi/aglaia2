@@ -175,6 +175,11 @@ def do_accept_borrow(request):
 
         brw = Borrow.objects.get(id=id)
 
+        brw_list = Borrow.objects.filter(single = brw.single, status = BORROW_AUTHING_KEY)
+        if len(brw_list) > 1:
+            return show_message(request, '有多人同时借用该物品，请先拒绝多余的借用请求')
+
+
         if not brw.status == BORROW_AUTHING_KEY:
             return show_message(request, 'This Request is not under verifying!')
         if not brw.single.status == AVALIABLE_KEY:
@@ -463,7 +468,7 @@ def do_destroy(request):
 @method_required('POST')
 @permission_required(PERM_NORMAL)
 def do_borrow(request):
-#    try:
+    try:
         id = request.POST['id']
         note = request.POST['note']
 
@@ -476,8 +481,8 @@ def do_borrow(request):
         send_notify_mail(request, BrwRequstMail, borrow=brw)
 
         return HttpResponseRedirect(reverse("goods.views.show_borrow"))
-#    except Exception as e:
-#        return show_message(request, 'Borrow request failed: ' + e.__str__())
+    except Exception as e:
+        return show_message(request, 'Borrow request failed: ' + e.__str__())
 
 
 @method_required('POST')
