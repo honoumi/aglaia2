@@ -81,22 +81,27 @@ def show_log(request):
             is_actor = g['is_actor']
         llist = log_list_func[g['type']](g['id'], is_actor)
         
-        def show_all_log():
-            return render(request, 'log.html', {
+ 
+        def show_repair_log():
+            return render(request, 'borrow_log.html', {
                 'user':get_context_user(request.user),
                 'logs': llist
-                })
-        
-        def show_repair_log():
-            return show_all_log()
+                })           
         
         @permission_required(PERM_VIEW_ALL)
         def show_other_log(request):
-            return show_all_log()
+            if g['type'] == 'borrow':
+                return show_repair_log()
+            else:
+                return render(request, 'log.html', {
+                    'user':get_context_user(request.user),
+                    'logs': llist
+                    })
         
         if g['type'] == 'borrow'and Borrow.objects.get(id=g['id']).account.user == request.user: #判断是否是借用人
             return show_repair_log()
         else:
+            
             return show_other_log(request)
         
     except Exception as e:
