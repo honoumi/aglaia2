@@ -147,7 +147,7 @@ def find_computing(filt, exclude):
 def update_computing(computing_id, update_content):
     correct_keys = ['pc_type', 'cpu', 'memory', 'disk', 'os', 'sn',
                     'disk_type', 'expire_time', 'login',
-                    'password', 'status', 'note', 'address', 'flag',
+                    'password', 'status', 'note', 'address', 'flag','flag_description',
                     'name']
     for key in update_content:
         if not(key in correct_keys):
@@ -191,6 +191,8 @@ def update_computing(computing_id, update_content):
             computing.address = update_content['address']
         if 'flag' in update_content:
             computing.flag = update_content['flag']
+        if 'flag_description' in update_content:
+            computing.flag_description = update_content['flag_description']
         computing.save()
         return computing
     except KeyError:

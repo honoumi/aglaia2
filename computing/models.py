@@ -88,6 +88,7 @@ class Computing(models.Model):
     note = models.CharField(max_length=500)
     address = models.CharField(max_length=30, blank=True)
     flag = models.BooleanField(default=False)
+    flag_description = models.CharField(max_length=200)
     def __str__(self):
         return self.sn
 

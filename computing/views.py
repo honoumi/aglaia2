@@ -123,6 +123,9 @@ def do_borrow_request(request):
         comp['address'] = UNKNOWN_ADDR
         comp['note'] = post['reason']
         comp['flag'] = post['flag']
+        comp['flag_description'] = ''
+        if 'flag_description' in post:
+            comp['flag_description'] = post['flag_description']
         if 'name' in post:
             comp['name'] = post['name']
         else:
@@ -341,17 +344,23 @@ def do_get_package(request):
 def do_set_flag(request):
     try:
         id = request.POST['id']
+        print(request.POST)
         flag = None
+        flag_description = ''
         if request.POST['flag'] == 'false':
             flag = False
         else:
             flag = True
+            if 'flag_description' in request.POST:
+                flag_description = request.POST['flag_description']
+        
         comp = Computing.objects.get(id=id)
         if not comp.account.user == request.user:
             return show_message(request, 'This resource is not borrowed by you!')
-        packed_update_computing(request, id, {'flag':flag})
-        comp = Computing.objects.get(id=id)
-        return HttpResponseRedirect(reverse('goods.views.show_borrow'))
+        packed_update_computing(request, id, {'flag':flag, 'flag_description': flag_description})
+#        comp = Computing.objects.get(id=id)
+        return  HttpResponse('ok')
+#        return HttpResponseRedirect(reverse('goods.views.show_borrow'))
     except Exception as e:
         return show_message(request, 'Set flag failed: ' + e.__str__())
 
