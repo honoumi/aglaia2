@@ -174,7 +174,48 @@
   </div>
 </div>
 {# Computing resource modification dialog ends here. #}
+<div class="ui modal" id="res-extreme-flag-modal">
+  <i class="close icon"></i>
+  <div class="header">
+    <i class="large circular inverted cloud icon"></i>
+    修改数据标签
+  </div>
+  <div class="content">
+    <div class="ui teal message">
+      <div class="header">待修改计算资源</div>
+    <p class="description"></p>
+      </div>
+    <div class="ui form res-extreme-flag">
+      <input type="hidden" class="request-id">
+      <div class="fields">
 
+          <div class="two wide field flag">
+            <label>重要数据</label>
+            <div class="ui selection dropdown fluid">
+              <input type="hidden" name="type" value="true">
+              <div class="text">是</div>
+              <i class="dropdown icon"></i>
+              <div class="menu ui transition hidden">
+                <div class="item active" data-value="true">是</div>
+                <div class="item" data-value="false">否</div>
+              </div>
+            </div>
+          </div>
+        <div class="fourteen wide field flag_description">
+            <label>简短描述</label>
+            <div class="ui left labeled icon input">
+                <i class="teal right arrow icon"></i>
+                <input type="text">
+            </div>
+        </div>
+          </div>
+      <div class="ui red hidden message">
+      </div>
+      <a href="#" class="ui teal button submit">提交</a>
+      <a href="#" class="ui basic button cancel">取消</a>
+    </div>
+  </div>
+</div>
 {# Computing resource request modal begins here. #}
 <div class="ui  modal" id="res-modal">
   <i class="close icon"></i>
@@ -304,225 +345,242 @@
 {% block js %}
   <script src="{% static "javascript/borrow.js" %}"></script>
   <script>
-  $(function(){
-    $('.res-modif .submit').click(function() {
-      if ($('.res-borrow .submit').hasClass('disabled'))
-        return;
+      $(function () {
+          $('.res-modif .submit').click(function () {
+              if ($('.res-borrow .submit').hasClass('disabled'))
+                  return;
 
-      $('.res-modif .submit').hasClass('disabled');
+              $('.res-modif .submit').hasClass('disabled');
 
-      $.ajax({
-        url: '{% url "computing.views.do_modif_request" %}',
-        type: 'POST',
-        dataType: 'text',
-        data: {
-          id: $('.res-modif .request-id').val(),
-          reason: $('.res-modif .reason input').val(),
-        },
-      }) 
-      .done(function(data) {
-        if (data == 'ok') {
-          location.reload(true);
-        } else {
-          $('.res-modif .message').html('修改失败');         
-        }
-      })
-      .fail(function() {
-        $('.res-modif .message').html('修改失败');
-      })
-      .always(function() {
-        $('.res-modif .submit').removeClass('disabled');
-        $('.res-modif .message').removeClass('hidden');
+              $.ajax({
+                  url: '{% url "computing.views.do_modif_request" %}',
+                  type: 'POST',
+                  dataType: 'text',
+                  data: {
+                      id: $('.res-modif .request-id').val(),
+                      reason: $('.res-modif .reason input').val(),
+                  },
+              })
+              .done(function (data) {
+                  if (data == 'ok') {
+                      location.reload(true);
+                  } else {
+                      $('.res-modif .message').html('修改失败');
+                  }
+              })
+              .fail(function () {
+                  $('.res-modif .message').html('修改失败');
+              })
+              .always(function () {
+                  $('.res-modif .submit').removeClass('disabled');
+                  $('.res-modif .message').removeClass('hidden');
+              });
+
+          });
+
+          $('.res-modif .cancel').click(function () {
+              $('#res-modif-modal').modal('hide');
+          });
+
+          $('.res-borrow .submit').click(function () {
+              if ($('.res-borrow .submit').hasClass('disabled'))
+                  return;
+
+              $('.res-borrow .submit').addClass('disabled');
+
+              $.ajax({
+                  url: '{% url "computing.views.do_borrow_request" %}',
+                  type: 'POST',
+                  dataType: 'text',
+                  data: {
+                      flag: $('.res-borrow .flag .active.item').attr('data-value'),
+                      type: $('.res-borrow .server-type .active.item').attr('data-value'),
+                      cpu: $('.res-borrow .cpu input').val(),
+                      memory: $('.res-borrow .memory input').val(),
+                      disk_type: $('.res-borrow .disk_type input').val(),
+                      disk: $('.res-borrow .disk input').val(),
+                      os: $('.res-borrow .os input').val(),
+                      login: $('.res-borrow .login input').val(),
+                      reason: $('.res-borrow .reason input').val(),
+                      initial_password: $('.res-borrow .initial_password input').val(),
+                  },
+              })
+              .done(function (data) {
+                  if (data == 'ok')
+                      location.reload(true);
+                  else
+                      $('.res-borrow .message').html('提交申请失败');
+              })
+              .fail(function () {
+                  $('.res-borrow .message').html('服务器故障');
+              })
+              .always(function () {
+                  $('.res-borrow .message').removeClass('hidden');
+                  $('.res-borrow .submit').removeClass('disabled');
+              });
+
+          });
+
+          $('.resource-item .modify.button').click(function () {
+              var item = $(this).parent().parent();
+
+              $('#res-modif-modal .description').html(item.children('.description').text());
+              $('.res-modif .request-id').val(item.attr('data-request-id'));
+              $('#res-modif-modal').modal('show');
+          });
+
+          $('.resource-item .return.button').click(function () {
+              var item = $(this).parent().parent();
+
+              if ($(this).hasClass('disabled'))
+                  return;
+
+              $(this).addClass('disabled');
+
+              $.ajax({
+                  url: '{% url "computing.views.do_return_request" %}',
+                  type: 'POST',
+                  dataType: 'text',
+                  data: {
+                      id: item.attr('data-request-id')
+                  },
+              })
+              .done(function () {
+              })
+              .fail(function () {
+              })
+              .always(function () {
+                  location.reload(true);
+              });
+
+          });
+
+          $('.resource-item .return.button').click(function () {
+              var item = $(this).parent().parent();
+
+              if ($(this).hasClass('disabled'))
+                  return;
+
+              $(this).addClass('disabled');
+
+              $.ajax({
+                  url: '{% url "computing.views.do_return_request" %}',
+                  type: 'POST',
+                  dataType: 'text',
+                  data: {
+                      id: item.attr('data-request-id')
+                  },
+              })
+              .always(function () {
+                  location.reload(true);
+              });
+
+          });
+
+          $('.resource-item .extreme-flag.button').click(function () {
+              var item = $(this).parent().parent();
+
+              $('#res-extreme-flag-modal .description').html(item.children('.description').text());
+              
+              $('.res-extreme-flag .request-id').val(item.attr('data-request-id'));
+              $('#res-extreme-flag-modal').modal('show');
+          });
+
+          $('.res-borrow .package input').change(function () {
+              var pkg_name = $(this).val();
+              if (pkg_name == 'none') {
+                  $('.res-borrow .server-type .menu').removeClass('disabled');
+                  $('.res-borrow .server-type').removeClass('disabled');
+                  $('.res-borrow .cpu input').removeAttr('disabled');
+                  $('.res-borrow .memory input').removeAttr('disabled');
+                  $('.res-borrow .disk_type').removeClass('disabled');
+                  $('.res-borrow .disk_type .menu').removeClass('disabled');
+                  $('.res-borrow .disk input').removeAttr('disabled');
+                  $('.res-borrow .os input').removeAttr('disabled');
+              } else {
+                  $.ajax({
+                      url: '{% url "computing.views.do_get_package" %}',
+                      type: 'POST',
+                      dataType: 'json',
+                      data: { name: pkg_name },
+                  })
+                  .done(function (pkg) {
+                      if (pkg.type == 'real') {
+                          $('.res-borrow .server-type .text').html('实体机');
+                          $('.res-borrow .server-type input').val('real');
+                      } else {
+                          $('.res-borrow .server-type .text').html('虚拟机');
+                          $('.res-borrow .server-type input').val('virtual');
+                      }
+                      if (pkg.disktype == 'HDD') {
+                          $('.res-borrow .disk_type .text').html('HDD');
+                          $('.res-borrow .disk_type input').val('HDD');
+                      } else {
+                          $('.res-borrow .disk_type .text').html('SSD');
+                          $('.res-borrow .disk_type input').val('SSD');
+                      }
+                      $('.res-borrow .cpu input').val(pkg.cpu);
+                      $('.res-borrow .memory input').val(pkg.memory);
+                      $('.res-borrow .disk_type input').val(pkg.disktype);
+                      $('.res-borrow .disk input').val(pkg.disk);
+                      $('.res-borrow .os input').val(pkg.os);
+
+                      $('.res-borrow .server-type .menu').addClass('disabled');
+                      $('.res-borrow .server-type').addClass('disabled');
+                      $('.res-borrow .cpu input').attr('disabled', '');
+                      $('.res-borrow .memory input').attr('disabled', '');
+                      $('.res-borrow .disk_type').addClass('disabled');
+                      $('.res-borrow .disk_type .menu').addClass('disabled');
+                      $('.res-borrow .disk input').attr('disabled', '');
+                      $('.res-borrow .os input').attr('disabled', '');
+                  })
+                  .fail(function () {
+                      alert('套餐查询失败');
+                  });
+              }
+          });
       });
-      
-    });
-
-    $('.res-modif .cancel').click(function(){
-      $('#res-modif-modal').modal('hide');
-    });
-
-    $('.res-borrow .submit').click(function() {
-      if($('.res-borrow .submit').hasClass('disabled'))
-        return;
-
-      $('.res-borrow .submit').addClass('disabled');
-
-      $.ajax({
-        url: '{% url "computing.views.do_borrow_request" %}',
-        type: 'POST',
-        dataType: 'text',
-        data: {
-          flag: $('.res-borrow .flag .active.item').attr('data-value'),
-          type: $('.res-borrow .server-type .active.item').attr('data-value'),
-          cpu: $('.res-borrow .cpu input').val(),
-          memory: $('.res-borrow .memory input').val(),
-          disk_type: $('.res-borrow .disk_type input').val(),
-          disk: $('.res-borrow .disk input').val(),
-          os: $('.res-borrow .os input').val(),
-          login: $('.res-borrow .login input').val(),
-          reason: $('.res-borrow .reason input').val(),
-          initial_password: $('.res-borrow .initial_password input').val(),
-        },
-      })
-      .done(function(data) {
-        if (data == 'ok')
-          location.reload(true);
-        else
-          $('.res-borrow .message').html('提交申请失败');
-      })
-      .fail(function() {
-        $('.res-borrow .message').html('服务器故障');
-      })
-      .always(function() {
-        $('.res-borrow .message').removeClass('hidden');
-        $('.res-borrow .submit').removeClass('disabled');
+      $('.res-extreme-flag .cancel').click(function () {
+          $('#res-extreme-flag-modal').modal('hide');
       });
-      
-    });
+      $('.res-extreme-flag .submit').click(function () {
 
-    $('.resource-item .modify.button').click(function() {
-      var item = $(this).parent().parent();
+          $.ajax({
+              url: '/computing/do_set_flag',
+              type: 'POST',
+              dataType: 'text',
+              data: {
+                  id: $('.res-extreme-flag .request-id').val(),
+                  flag: $('.res-extreme-flag .flag .item.active').attr('data-value'),
+                  flag_description: $('.res-extreme-flag .flag_description input').val(),
+              },
+          })
+          .done(function (data) {
+              if (data == 'ok') {
+                  location.reload(true);
+              } else {
+                  $('.res-extreme-flag .message').html('修改失败');
+              }
+          })
+          .fail(function () {
+              $('.res-extreme-flag .message').html('修改失败');
+          })
+          .always(function () {
+              $('.res-extreme-flag .message').removeClass('hidden');
+          });
 
-      $('#res-modif-modal .description').html(item.children('.description').text());
-      $('.res-modif .request-id').val(item.attr('data-request-id'));
-      $('#res-modif-modal').modal('show');
-    });
-
-    $('.resource-item .return.button').click(function() {
-      var item = $(this).parent().parent();
-      
-      if ($(this).hasClass('disabled'))
-        return;
-
-      $(this).addClass('disabled');
-
-      $.ajax({
-        url: '{% url "computing.views.do_return_request" %}',
-        type: 'POST',
-        dataType: 'text',
-        data: {
-          id:  item.attr('data-request-id')
-        },
-      })
-      .done(function() {
-      })
-      .fail(function() {
-      })
-      .always(function() {
-        location.reload(true);
       });
-      
-    });
-
-    $('.resource-item .return.button').click(function() {
-      var item = $(this).parent().parent();
-      
-      if ($(this).hasClass('disabled'))
-        return;
-
-      $(this).addClass('disabled');
-
-      $.ajax({
-        url: '{% url "computing.views.do_return_request" %}',
-        type: 'POST',
-        dataType: 'text',
-        data: {
-          id:  item.attr('data-request-id')
-        },
-      })
-      .always(function() {
-        location.reload(true);
-      });
-      
-    });
-
-    $('.resource-item .extreme-flag.button').click(function(){
-      var item = $(this).parent().parent();
-
-      if ($(this).hasClass('disabled'))
-        return;
-
-      $(this).addClass('disabled');
-
-      $.ajax({
-        url: '{% url "computing.views.do_set_flag" %}',
-        type: 'POST',
-        dataType: 'text',
-        data: {
-          id:  item.attr('data-request-id'),
-          flag: $(this).attr('data-destiny'),
-        },
-      })
-      .always(function() {
-        location.reload(true);
-      });
-    });
-
-    $('.res-borrow .package input').change(function(){
-      var pkg_name = $(this).val();
-      if (pkg_name == 'none') {
-        $('.res-borrow .server-type .menu').removeClass('disabled');
-        $('.res-borrow .server-type').removeClass('disabled');
-        $('.res-borrow .cpu input').removeAttr('disabled');
-        $('.res-borrow .memory input').removeAttr('disabled');
-        $('.res-borrow .disk_type').removeClass('disabled');
-        $('.res-borrow .disk_type .menu').removeClass('disabled');
-        $('.res-borrow .disk input').removeAttr('disabled');
-        $('.res-borrow .os input').removeAttr('disabled');
-      } else {
-        $.ajax({
-          url: '{% url "computing.views.do_get_package" %}',
-          type: 'POST',
-          dataType: 'json',
-          data: { name: pkg_name },
-        })
-        .done(function(pkg) {
-          if (pkg.type == 'real') {
-            $('.res-borrow .server-type .text').html('实体机');
-            $('.res-borrow .server-type input').val('real');
-          } else {
-            $('.res-borrow .server-type .text').html('虚拟机');
-            $('.res-borrow .server-type input').val('virtual');
-          }
-          if (pkg.disktype == 'HDD') {
-            $('.res-borrow .disk_type .text').html('HDD');
-            $('.res-borrow .disk_type input').val('HDD');
-          } else {
-            $('.res-borrow .disk_type .text').html('SSD');
-            $('.res-borrow .disk_type input').val('SSD');
-          }
-          $('.res-borrow .cpu input').val(pkg.cpu);
-          $('.res-borrow .memory input').val(pkg.memory);
-          $('.res-borrow .disk_type input').val(pkg.disktype);
-          $('.res-borrow .disk input').val(pkg.disk);
-          $('.res-borrow .os input').val(pkg.os);
-
-          $('.res-borrow .server-type .menu').addClass('disabled');
-          $('.res-borrow .server-type').addClass('disabled');
-          $('.res-borrow .cpu input').attr('disabled','');
-          $('.res-borrow .memory input').attr('disabled','');
-          $('.res-borrow .disk_type').addClass('disabled');
-          $('.res-borrow .disk_type .menu').addClass('disabled');
-          $('.res-borrow .disk input').attr('disabled','');
-          $('.res-borrow .os input').attr('disabled','');
-        })
-        .fail(function() {
-          alert('套餐查询失败');
-        });
-      }
-    });
-  });
   </script>
 
   <script type="text/javascript">
-  $(function (){
-    $('.agree-button').popup({
-      on: 'click'
-    });
-    $('.reject-button').popup({
-      on: 'click'
-    });
-  });
+      $(function () {
+          $('.agree-button').popup({
+              on: 'click'
+          });
+          $('.reject-button').popup({
+              on: 'click'
+          });
+      });
   </script>
 
 {% endblock %}
