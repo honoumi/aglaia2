@@ -5,7 +5,7 @@
 {% block title %}计算资源{% endblock %}
 
 {% block leftside %}
-		<div class="ui vertical menu">
+		<div class="ui vertical menu fixed">
 		  <div class="header item">
 		    <i class="cloud icon"></i>
 		    计算资源
@@ -30,6 +30,16 @@
           </a>
 		    </div>
 		  </div>
+            <div class="item">
+                <div class="menu">
+                    <a class="item" id="flag-filter" style="display: block">
+                        筛选数据标签
+                    </a>
+                    <a class="item" id="flag-filter-cancel" style="display: none">
+                        取消筛选
+                    </a>
+                </div>
+            </div>
 		</div>
 {% endblock %}
 
@@ -106,9 +116,9 @@
             <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
             </form>
             <script type="text/javascript">
-              $(".agree-confirm-button").click(function(){
-                $(this).parent().trigger("submit");
-              });
+                $(".agree-confirm-button").click(function () {
+                    $(this).parent().trigger("submit");
+                });
             </script>
             '>同意</div>
             <div class="negative ui button float right reject-button" data-variation="inverted" data-position="top center" data-html='
@@ -124,9 +134,9 @@
             <div class="negative ui tiny circular button floated right fluid reject-confirm-button">确认拒绝</div>
             </form>
             <script type="text/javascript">
-              $(".reject-confirm-button").click(function(){
-                $(this).parent().trigger("submit");
-              });
+                $(".reject-confirm-button").click(function () {
+                    $(this).parent().trigger("submit");
+                });
             </script>
             '>拒绝</div>
           </div>
@@ -198,9 +208,9 @@
                   <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
                   </form>
                   <script type="text/javascript">
-                    $(".agree-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".agree-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>
                   '>同意</div>
                   <div class="negative ui float right button reject-button"  style="floating:right;" data-variation="inverted" data-position="top center" data-html='
@@ -216,9 +226,9 @@
                   <div class="negative ui tiny circular button floated right fluid reject-confirm-button">确认拒绝</div>
                   </form>
                   <script type="text/javascript">
-                    $(".reject-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".reject-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>
                   '>拒绝</div>
                   </div>
@@ -276,9 +286,9 @@
                   <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
                   </form>
                   <script type="text/javascript">
-                    $(".agree-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".agree-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>
                   '>同意</div>
           </div>
@@ -324,9 +334,9 @@
                   <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
                   </form>
                   <script type="text/javascript">
-                    $(".agree-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".agree-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>
                   '>同意</div>
           </div>
@@ -404,9 +414,9 @@
                   <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认调整完毕</div>
                   </form>
                   <script type="text/javascript">
-                    $(".agree-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".agree-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>
                   '>调整完毕</div>
                   <div class="negative ui float right button reject-button" data-variation="inverted" data-position="top center" data-html='
@@ -422,9 +432,9 @@
                   <div class="negative ui tiny circular button floated right fluid reject-confirm-button">确认拒绝</div>
                   </form>
                   <script type="text/javascript">
-                    $(".reject-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".reject-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>
                   '>拒绝</div>
           </div>
@@ -470,9 +480,9 @@
             <div class="negative ui tiny circular button floated right fluid reject-confirm-button">确认拒绝</div>
             </form>
             <script type="text/javascript">
-              $(".reject-confirm-button").click(function(){
-                $(this).parent().trigger("submit");
-              });
+                $(".reject-confirm-button").click(function () {
+                    $(this).parent().trigger("submit");
+                });
             </script>
             '>拒绝</div>
           </div>
@@ -592,7 +602,7 @@
         </div>
       </div>
       {% elif inuse.type == "virtual" %}
-      <div class="column" style="margin-top:10px">
+      <div class="column inuse-vir" style="margin-top:10px"  data-flag="{% if inuse.flag %}True{% else %}False{% endif %}">
         <div class="ui top attached header">
           <div class="ui horizontal blue label">编号 {{inuse.id}}</div>
           {% if inuse.flag %}
@@ -740,50 +750,63 @@
 {% block js %}
 
 <script type="text/javascript">
-  $(function (){
-    $('.agree-button').popup({
-      on: 'click'
-    });
-    $('.reject-button').popup({
-      on: 'click'
-    });
+    $(function () {
+        $('.agree-button').popup({
+            on: 'click'
+        });
+        $('.reject-button').popup({
+            on: 'click'
+        });
 
-    $('.final-ultimate-approve-unique-button').click(function(){
-      $.ajax({
-        url: '{% url "computing.views.do_get_comp_prop" %}',
-        type: 'POST',
-        dataType: 'json',
-        data: {
-          id: $(this).attr('data-id'),
-        },
-      })
-      .done(function(prop) {
-        if (prop.retcode == 'denied'){
-          alert('Denied!');
-          return;
-        }
-        if (prop.server_type == 'real') {
-            $('.res-modif .type .text').html('实体机');
-            $('.res-modif .type input').val('real');
-          } else {
-            $('.res-modif .type .text').html('虚拟机');
-            $('.res-modif .type input').val('virtual');
-          }
-          $('.res-modif #id').val(prop.id);
-        $('.res-modif .sn input').val(prop.sn);
-        $('.res-modif .ip input').val(prop.ip);
-        $('.res-modif .cpu input').val(prop.cpu);
-        $('.res-modif .memory input').val(prop.memory);
-        $('.res-modif .disk input').val(prop.disk);
-        $('.res-modif .os input').val(prop.os);
-        $('.res-modif .disktype input').val(prop.disktype);
-        $('.res-modif .disktype .text').html(prop.disktype);
-        $('.res-modif').modal('show');
-      }).failed(function(){
-        alert(':-(');
-      });
+        $('.final-ultimate-approve-unique-button').click(function () {
+            $.ajax({
+                url: '{% url "computing.views.do_get_comp_prop" %}',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    id: $(this).attr('data-id'),
+                },
+            })
+            .done(function (prop) {
+                if (prop.retcode == 'denied') {
+                    alert('Denied!');
+                    return;
+                }
+                if (prop.server_type == 'real') {
+                    $('.res-modif .type .text').html('实体机');
+                    $('.res-modif .type input').val('real');
+                } else {
+                    $('.res-modif .type .text').html('虚拟机');
+                    $('.res-modif .type input').val('virtual');
+                }
+                $('.res-modif #id').val(prop.id);
+                $('.res-modif .sn input').val(prop.sn);
+                $('.res-modif .ip input').val(prop.ip);
+                $('.res-modif .cpu input').val(prop.cpu);
+                $('.res-modif .memory input').val(prop.memory);
+                $('.res-modif .disk input').val(prop.disk);
+                $('.res-modif .os input').val(prop.os);
+                $('.res-modif .disktype input').val(prop.disktype);
+                $('.res-modif .disktype .text').html(prop.disktype);
+                $('.res-modif').modal('show');
+            }).failed(function () {
+                alert(':-(');
+            });
+        });
     });
-  });
+    $('#flag-filter').click(function () {
+        var inuse_list = $('.inuse-vir');
+        inuse_list.filter(function (num) {
+            return inuse_list[num].getAttribute('data-flag') == 'False';
+        }).hide();
+        $('#flag-filter-cancel').show();
+        $(this).hide();
+    });
+    $('#flag-filter-cancel').click(function () {
+        $('.inuse-vir').show();
+        $('#flag-filter').show();
+        $(this).hide();
+    });
 </script>
 
 {% endblock %}
