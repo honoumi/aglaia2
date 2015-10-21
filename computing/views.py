@@ -354,8 +354,8 @@ def do_set_flag(request):
             flag = False
         else:
             flag = True
-            if 'flag_description' in request.POST:
-                flag_description = request.POST['flag_description']
+        if 'flag_description' in request.POST:
+            flag_description = request.POST['flag_description']
         
         comp = Computing.objects.get(id=id)
         if not comp.account.user == request.user:

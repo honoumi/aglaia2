@@ -1,4 +1,4 @@
-<tr class="resource-item {% if status == "inuse" %}positive{% endif %}" data-request-id="{{ item.id }}">
+<tr class="resource-item {% if status == "inuse" %}positive{% endif %}" data-request-id="{{ item.id }}" data-flag="{{ item.flag }}">
   <td>
     {% if status == "borrowing" %}
       <i class="orange question icon"></i>借用申请中

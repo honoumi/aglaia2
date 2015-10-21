@@ -51,7 +51,18 @@
       </a>
     </div>
   </div>
-</div>
+<div class="item">
+    <div class="menu">
+      <a class="item" id="flag-filter">
+        筛选数据标签
+      </a>
+     <a class="item" id="flag-filter-cancel" style="display : none">
+        取消筛选
+      </a>
+    </div>
+  </div>
+</div>    
+
 {% endblock %}
 
 {% block content %}
@@ -570,6 +581,20 @@
           });
 
       });
+      $('#flag-filter').click(function () {
+          var computing_list = $('.resource-item');
+          computing_list.filter(function (tr) {
+              return computing_list[tr].getAttribute('data-flag') == "False";
+          }).hide();
+          $('#flag-filter-cancel').show()
+          $(this).hide();
+      })
+      $('#flag-filter-cancel').click(function () {
+          $('.resource-item').show()
+          $('#flag-filter').show();
+          $(this).hide();
+      })
+
   </script>
 
   <script type="text/javascript">
