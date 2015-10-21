@@ -47,6 +47,7 @@ def get_context_computing(comp):
     dc['name'] = comp.account.real_name
     dc['flag'] = comp.flag
     dc['sn'] = comp.sn
+    dc['flag_description'] = comp.flag_description
     return dc
 
 def get_context_server(sv):
