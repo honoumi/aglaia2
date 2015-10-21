@@ -49,7 +49,9 @@
       <button class="ui circular tiny inverted icon blue tip modify button" data-content="修改">
           <i class="edit icon"></i>
       </button>
-      <button class="ui circular tiny inverted icon orange tip extreme-flag button" data-content="修改数据标签<br>标签描述: {{ item.flag_description }}" data-destiny="{% if item.flag == True %}false{% else %}true{% endif %}">
+      <button class="ui circular tiny inverted icon orange tip extreme-flag button" data-content="
+          修改数据标签<br>重要数据: {% if item.flag == True %} 是 {% else %} 否 {% endif %}<br>标签描述: {{ item.flag_description }}"
+           data-destiny="{% if item.flag == True %}false{% else %}true{% endif %}">
           <i class="flag icon"></i>
       </button>
       <form action="{% url "log.views.show_log" %}" method="get" style="display:inline-block;">

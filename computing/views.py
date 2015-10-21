@@ -123,7 +123,10 @@ def do_borrow_request(request):
         comp['account'] = Account.objects.get(user=request.user)
         comp['address'] = UNKNOWN_ADDR
         comp['note'] = post['reason']
-        comp['flag'] = post['flag']
+        if post['flag'] == 'false':
+            comp['flag'] = False
+        else:
+            comp['flag'] = True
         comp['flag_description'] = ''
         if 'flag_description' in post:
             comp['flag_description'] = post['flag_description']
@@ -345,7 +348,6 @@ def do_get_package(request):
 def do_set_flag(request):
     try:
         id = request.POST['id']
-        print(request.POST)
         flag = None
         flag_description = ''
         if request.POST['flag'] == 'false':
