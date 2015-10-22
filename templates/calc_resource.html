@@ -637,6 +637,12 @@
               <div class="ui blue horizontal label">管理员答复</div>
               {{inuse.note}}
             </a>
+            {% if inuse.flag %}
+            <a class="item">
+              <div class="ui blue horizontal label">数据标签说明</div>
+              {{inuse.flag_descript}}
+            </a>
+            {% endif %}
            <a class="item delete-vir">
               <div class="ui red horizontal label">删除</div>
             </a>
