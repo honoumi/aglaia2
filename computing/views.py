@@ -379,6 +379,23 @@ def do_get_comp_prop(request):
     except Exception as e:
         print(e)
         return json_denied(request)
+    
+    
+@method_required('POST')
+@permission_required(PERM_COMPUT_AUTH)
+def do_delete_computing(request):
+    try:
+        post = request.POST
+        print(post)
+        print(type(post['id']))
+        id = int(post['id'])
+        comp = Computing.objects.get(id=id)
+        packed_update_computing(request, id,
+            {'status': RETURNED_KEY, 'note': ''}, log=get_comp_reted_log())
+
+        return HttpResponse('ok')
+    except:
+        return HttpResponse('denied')
 #===============================================
 #===============================================
 #===============================================

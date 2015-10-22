@@ -816,6 +816,7 @@
             return;
         }
         if (vir_column.attr('data-flag') == "True") {
+            alert("该虚拟机有重要数据，请备份后再删除！！");
             if (!window.confirm("该虚拟机有重要数据，是否删除?")) {
                 return;
             }
@@ -823,7 +824,6 @@
         $.ajax({
             url: '/computing/do_delete_computing',
             type: 'POST',
-            dataType: 'json',
             data: {
                 id: vir_column.attr('data-id'),
             },

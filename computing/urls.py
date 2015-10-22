@@ -14,7 +14,9 @@ urlpatterns = patterns('computing.views',
                        url(r'^do_get_package$', 'do_get_package'),
                        url(r'^do_get_comp_prop$', 'do_get_comp_prop'),
                        url(r'^do_set_flag$', 'do_set_flag'),
+                       url(r'^do_delete_computing', 'do_delete_computing'),
 
                        url(r'^show_computing_list$', 'show_computing_list'),
                        url(r'^show_comp_verify/$', 'show_comp_verify')
+                       
                        )
