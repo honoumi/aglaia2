@@ -30,6 +30,7 @@ from computing.interface import *
 def get_context_computing(comp):
     dc = {}
     dc['id'] = comp.id
+    dc['userid'] = comp.account.user.id
     dc['name'] = comp.name
     dc['status'] = comp.get_status_display()
     dc['package_name'] = comp.pack_name
@@ -44,7 +45,7 @@ def get_context_computing(comp):
     dc['login'] = comp.login
     dc['initial_password'] = comp.password
     #dc['expire_time'] = comp.expire_time.strftime('%Y-%m-%d')
-    dc['name'] = comp.account.real_name
+    dc['realname'] = comp.account.real_name
     dc['flag'] = comp.flag
     dc['sn'] = comp.sn
     dc['flag_description'] = comp.flag_description

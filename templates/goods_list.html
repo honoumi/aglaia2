@@ -108,6 +108,35 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+                <div class = "ui circular tiny inverted icon teal tip button">
+            <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
+                  <h5 class="ui header">发送邮件</h5>
+                  <form method="post" action="{% url "account.views.do_send_mail" %}">
+                  <div class="ui form">
+                    <input type="hidden" name="id" value="{{goods.user_realid}}">
+                    <div class="field">
+                        <label><font color="#FFFFFF">收件人</font></label>
+                        <input type="text" value="{{goods.user_name}} ">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">标题</font></label>
+                        <input type="text" name="subject" placeholder="标题">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">内容</font></label>
+                        <input type="text" name="message" placeholder="内容">
+                    </div>
+                  </div>
+                  <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
+                  </form>
+                  <script type="text/javascript">
+                    $(".agree-confirm-button").click(function(){
+                      $(this).parent().trigger("submit");
+                    });
+                  </script>'>
+                  <i class="mail icon"></i>
+                </a>
+              </div>
               </td>
           </tr>
         {% elif goods.status == "unavailable" %}
@@ -139,6 +168,35 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+                  <div class = "ui circular tiny inverted icon teal tip button">
+            <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
+                  <h5 class="ui header">发送邮件</h5>
+                  <form method="post" action="{% url "account.views.do_send_mail" %}">
+                  <div class="ui form">
+                    <input type="hidden" name="id" value="{{goods.user_realid}}">
+                    <div class="field">
+                        <label><font color="#FFFFFF">收件人</font></label>
+                        <input type="text" value="{{goods.user_name}} ">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">标题</font></label>
+                        <input type="text" name="subject" placeholder="标题">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">内容</font></label>
+                        <input type="text" name="message" placeholder="内容">
+                    </div>
+                  </div>
+                  <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
+                  </form>
+                  <script type="text/javascript">
+                    $(".agree-confirm-button").click(function(){
+                      $(this).parent().trigger("submit");
+                    });
+                  </script>'>
+                  <i class="mail icon"></i>
+                </a>
+              </div>
               </td>
           </tr>
         {% elif goods.status == "borrowed" %}
@@ -170,6 +228,35 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+                  <div class = "ui circular tiny inverted icon teal tip button">
+            <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
+                  <h5 class="ui header">发送邮件</h5>
+                  <form method="post" action="{% url "account.views.do_send_mail" %}">
+                  <div class="ui form">
+                    <input type="hidden" name="id" value="{{goods.user_realid}}">
+                    <div class="field">
+                        <label><font color="#FFFFFF">收件人</font></label>
+                        <input type="text" value="{{goods.user_name}} ">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">标题</font></label>
+                        <input type="text" name="subject" placeholder="标题">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">内容</font></label>
+                        <input type="text" name="message" placeholder="内容">
+                    </div>
+                  </div>
+                  <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
+                  </form>
+                  <script type="text/javascript">
+                    $(".agree-confirm-button").click(function(){
+                      $(this).parent().trigger("submit");
+                    });
+                  </script>'>
+                  <i class="mail icon"></i>
+                </a>
+              </div>
               </td>
           </tr>
         {% elif goods.status == "destroyed" %}  
@@ -201,6 +288,35 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+                  <div class = "ui circular tiny inverted icon teal tip button">
+            <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
+                  <h5 class="ui header">发送邮件</h5>
+                  <form method="post" action="{% url "account.views.do_send_mail" %}">
+                  <div class="ui form">
+                    <input type="hidden" name="id" value="{{goods.user_realid}}">
+                    <div class="field">
+                        <label><font color="#FFFFFF">收件人</font></label>
+                        <input type="text" value="{{goods.user_name}} ">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">标题</font></label>
+                        <input type="text" name="subject" placeholder="标题">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">内容</font></label>
+                        <input type="text" name="message" placeholder="内容">
+                    </div>
+                  </div>
+                  <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
+                  </form>
+                  <script type="text/javascript">
+                    $(".agree-confirm-button").click(function(){
+                      $(this).parent().trigger("submit");
+                    });
+                  </script>'>
+                  <i class="mail icon"></i>
+                </a>
+              </div>
               </td>
           </tr>
         {% elif goods.status == "lost" %}  
@@ -232,6 +348,35 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+                  <div class = "ui circular tiny inverted icon teal tip button">
+            <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
+                  <h5 class="ui header">发送邮件</h5>
+                  <form method="post" action="{% url "account.views.do_send_mail" %}">
+                  <div class="ui form">
+                    <input type="hidden" name="id" value="{{goods.user_realid}}">
+                    <div class="field">
+                        <label><font color="#FFFFFF">收件人</font></label>
+                        <input type="text" value="{{goods.user_name}} ">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">标题</font></label>
+                        <input type="text" name="subject" placeholder="标题">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">内容</font></label>
+                        <input type="text" name="message" placeholder="内容">
+                    </div>
+                  </div>
+                  <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
+                  </form>
+                  <script type="text/javascript">
+                    $(".agree-confirm-button").click(function(){
+                      $(this).parent().trigger("submit");
+                    });
+                  </script>'>
+                  <i class="mail icon"></i>
+                </a>
+              </div>
               </td>
           </tr>
           {% elif goods.status == "repairing" %}  
@@ -263,6 +408,35 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+                  <div class = "ui circular tiny inverted icon teal tip button">
+            <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
+                  <h5 class="ui header">发送邮件</h5>
+                  <form method="post" action="{% url "account.views.do_send_mail" %}">
+                  <div class="ui form">
+                    <input type="hidden" name="id" value="{{goods.user_realid}}">
+                    <div class="field">
+                        <label><font color="#FFFFFF">收件人</font></label>
+                        <input type="text" value="{{goods.user_name}} ">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">标题</font></label>
+                        <input type="text" name="subject" placeholder="标题">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">内容</font></label>
+                        <input type="text" name="message" placeholder="内容">
+                    </div>
+                  </div>
+                  <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
+                  </form>
+                  <script type="text/javascript">
+                    $(".agree-confirm-button").click(function(){
+                      $(this).parent().trigger("submit");
+                    });
+                  </script>'>
+                  <i class="mail icon"></i>
+                </a>
+              </div>
               </td>
           </tr>
         {% endif %}
@@ -335,6 +509,9 @@
     var do_set_available = '{% url "goods.views.do_set_available" %}';
     var do_destroy = '{% url "goods.views.do_destroy" %}';
     $(function(){
+       $('.agree-button').popup({
+      on: 'click'
+    });
       $('.ui.dropdown').dropdown();
       $('.config-detail').popup({
         on: 'hover'
