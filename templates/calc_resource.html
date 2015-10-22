@@ -244,6 +244,7 @@
           <div class="ui horizontal red label">含重要信息</div>
           {% endif %}
           实体资源
+          
         </div>
         <div class="ui attached segment">
           <div class="ui divided selection list">
@@ -292,6 +293,7 @@
           <div class="ui horizontal red label">含重要信息</div>
           {% endif %}
           虚拟资源
+
         </div>
         <div class="ui attached segment">
           <div class="ui divided selection list">
@@ -560,6 +562,36 @@
           <div class="ui horizontal red label">含重要信息</div>
           {% endif %}
           实体资源
+          <div class = "ui horizontal blue label">
+            <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
+                  <h5 class="ui header">发送邮件</h5>
+                  <form method="post" action="{% url "account.views.do_send_mail" %}">
+                  <div class="ui form">
+                    <input type="hidden" name="id" value="{{inuse.userid}}">
+                    <div class="field">
+                        <label><font color="#FFFFFF">收件人</font></label>
+                        <input type="text" value="{{inuse.realname}} ">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">标题</font></label>
+                        <input type="text" name="subject" placeholder="标题">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">内容</font></label>
+                        <input type="text" name="message" placeholder="内容">
+                    </div>
+                  </div>
+                  <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
+                  </form>
+                  <script type="text/javascript">
+                    $(".agree-confirm-button").click(function(){
+                      $(this).parent().trigger("submit");
+                    });
+                  </script>'>
+                  <i class="mail icon"></i>
+                  发送邮件通知
+                </a>
+              </div>
         </div>
         <div class="ui attached segment">
           <div class="ui divided selection list">
@@ -599,6 +631,36 @@
           <div class="ui horizontal red label">含重要信息</div>
           {% endif %}
           虚拟资源
+          <div class = "ui horizontal blue label">
+            <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
+                  <h5 class="ui header">发送邮件</h5>
+                  <form method="post" action="{% url "account.views.do_send_mail" %}">
+                  <div class="ui form">
+                    <input type="hidden" name="id" value="{{inuse.userid}}">
+                    <div class="field">
+                        <label><font color="#FFFFFF">收件人</font></label>
+                        <input type="text" value="{{inuse.realname}} ">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">标题</font></label>
+                        <input type="text" name="subject" placeholder="标题">
+                    </div>
+                    <div class="field">
+                        <label><font color="#FFFFFF">内容</font></label>
+                        <input type="text" name="message" placeholder="内容">
+                    </div>
+                  </div>
+                  <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
+                  </form>
+                  <script type="text/javascript">
+                    $(".agree-confirm-button").click(function(){
+                      $(this).parent().trigger("submit");
+                    });
+                  </script>'>
+                  <i class="mail icon"></i>
+                  发送邮件通知
+                </a>
+              </div>
         </div>
         <div class="ui attached segment">
           <div class="ui divided selection list">
