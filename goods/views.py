@@ -56,11 +56,14 @@ def get_context_single(sgl):
     dc['sn'] = sgl.sn
     dc['status'] = sgl.get_status_display()
     try:
-        dc['user_name'] = Account.objects.get(user__username=sgl.user_name).real_name
+        acc = Account.objects.get(user__username=sgl.user_name)
+        dc['user_name'] = acc.real_name
         dc['user_id'] = sgl.user_name
+        dc['user_realid'] = acc.user.id
     except:
         dc['user_id'] = ''
         dc['user_name'] = ''
+        dc['user_realid'] = ''
     dc['note'] = sgl.note
     props = []
     for i in range(0,tp.get_pronum()):
