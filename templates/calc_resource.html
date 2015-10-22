@@ -602,7 +602,7 @@
         </div>
       </div>
       {% elif inuse.type == "virtual" %}
-      <div class="column inuse-vir" style="margin-top:10px"  data-flag="{% if inuse.flag %}True{% else %}False{% endif %}">
+      <div class="column inuse-vir" style="margin-top:10px"  data-flag="{% if inuse.flag %}True{% else %}False{% endif %}" data-id="{{inuse.id}}">
         <div class="ui top attached header">
           <div class="ui horizontal blue label">编号 {{inuse.id}}</div>
           {% if inuse.flag %}
@@ -636,6 +636,9 @@
             <a class="item">
               <div class="ui blue horizontal label">管理员答复</div>
               {{inuse.note}}
+            </a>
+           <a class="item delete-vir">
+              <div class="ui red horizontal label">删除</div>
             </a>
           </div>
         </div>
@@ -807,6 +810,35 @@
         $('#flag-filter').show();
         $(this).hide();
     });
+    $('.inuse-vir .delete-vir').click(function () {
+        var vir_column = $(this).parent().parent().parent();
+        if (!window.confirm("是否删除该虚拟机?")) {
+            return;
+        }
+        if (vir_column.attr('data-flag') == "True") {
+            if (!window.confirm("该虚拟机有重要数据，是否删除?")) {
+                return;
+            }
+        }
+        $.ajax({
+            url: '/computing/do_delete_computing',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id: vir_column.attr('data-id'),
+            },
+        })
+        .done(function (data) {
+            if (data == 'ok') {
+                location.reload(true);
+            } else {
+                alert("删除失败!");
+            }
+        })
+        .fail(function () {
+            alert("删除失败!");
+        });
+    })
 </script>
 
 {% endblock %}
