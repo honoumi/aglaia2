@@ -62,6 +62,10 @@ def get_account_loglist_context(id, is_actor):
         l = sorted(chain(accountLog, brwLog, compLog, goodLog), key=attrgetter('time'), reverse=False)
     return get_context_list(l, get_context_log)
 
+def get_purchase_destroy_context():
+    l = LogPurchaseDestroy.objects.filter().order_by('time')
+    return get_context_list(l, get_context_log)
+    
 
 log_list_func = {
     'goods':get_goods_loglist_context,
@@ -109,5 +113,16 @@ def show_log(request):
         
         
 
-
-
+@method_required('GET')
+@permission_required(PERM_VIEW_ALL)
+def show_purchase_destroy_list(request):
+    try:
+        llist = get_purchase_destroy_context()
+        return render(request, 'log.html', {
+            'user':get_context_user(request.user),
+            'logs': llist
+            })
+        
+        
+    except Exception as e:
+        return show_message(request, 'Show log Error: ' + e.__str__())
