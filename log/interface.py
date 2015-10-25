@@ -1,4 +1,4 @@
-from log.models import *, LogPurchaseDestroy
+from log.models import *
 from datetime import *
 
 
@@ -57,10 +57,12 @@ def create_purchase_destroy_log(user_id, target, action, description):
     try:
         logPurchaseDestroy = LogPurchaseDestroy(user_id=user_id,
                                                 target=target, action=action,
-                                                time=datatime.now()
+                                                time=datetime.now(),
                                                 description=description,
                                                 )
         logPurchaseDestroy.save()
+    except Exception as e:
+        raise e
         
         
 create_log_func = {
