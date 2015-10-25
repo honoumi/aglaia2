@@ -577,6 +577,16 @@ def show_add_goods(request):
     })
 
 @method_required('GET')
+def show_request_purchase(request):
+    type_list = []
+    for t in GType.objects.all():
+        type_list.append(t.name)
+    return render(request, "add_goods.html", {
+        'user': get_context_user(request.user),
+        "type_list": type_list,
+    })
+
+@method_required('GET')
 @permission_required(PERM_NORMAL)
 def show_list(request):
 

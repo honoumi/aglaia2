@@ -6,6 +6,18 @@
 
 {% block leftside %}
 
+{% if user.type == "normal" %}
+<div class="ui vertical menu">
+  <div class="header item">
+    <i class="cloud icon"></i>
+    采购
+  </div>
+</div>
+<a class="ui green button  fluid" href="/goods/show_request_purchase">申请采购</a>
+<br/>
+
+{% endif %}
+
 {% if user.type != "normal" %}
 <div class="ui vertical menu">
   <div class="header item">
