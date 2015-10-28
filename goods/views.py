@@ -196,6 +196,8 @@ def do_accept_borrow(request):
         return show_message(request, 'Accept borrow failed: '+e.__str__())
 
 
+
+
 @method_required('POST')
 @permission_required(PERM_GOODS_AUTH)
 def do_reject_borrow(request):
