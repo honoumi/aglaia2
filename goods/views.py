@@ -581,7 +581,7 @@ def show_request_purchase(request):
     type_list = []
     for t in GType.objects.all():
         type_list.append(t.name)
-    return render(request, "add_goods.html", {
+    return render(request, "request_purchase.html", {
         'user': get_context_user(request.user),
         "type_list": type_list,
     })
