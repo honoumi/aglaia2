@@ -44,3 +44,14 @@ class LogSingle(models.Model):
     description = models.CharField(max_length=500)
     def get_target_str(self):
         return self.target.sn
+
+class LogPurchaseDestroy(models.Model):
+    user_id = models.IntegerField()
+    target = models.ForeignKey(Single)
+    action = models.CharField(max_length=100)
+    time = models.DateTimeField()
+    description = models.CharField(max_length=500)
+    def get_target_str(self):
+        return self.target.sn
+    
+    

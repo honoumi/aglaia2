@@ -463,8 +463,12 @@ def do_set_available(request):
 def do_destroy(request):
     try:
         id = request.POST['id']
+        desc = request.POST['note']
 
         packed_update_single(request, id, {'status':DESTROYED_KEY}, log=get_good_destroy_log())
+        create_log('destroy', user_id = request.user.id,
+                   target=Single.objects.get(id=id), action='销毁物品',
+                   description=desc)
 
         return HttpResponseRedirect(reverse("goods.views.show_list"))
     except Exception as e:
@@ -566,6 +570,16 @@ def do_repair_goods(request):
 @method_required('GET')
 @permission_required(PERM_GOODS_AUTH)
 def show_add_goods(request):
+    type_list = []
+    for t in GType.objects.all():
+        type_list.append(t.name)
+    return render(request, "add_goods.html", {
+        'user': get_context_user(request.user),
+        "type_list": type_list,
+    })
+
+@method_required('GET')
+def show_request_purchase(request):
     type_list = []
     for t in GType.objects.all():
         type_list.append(t.name)

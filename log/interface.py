@@ -53,10 +53,24 @@ def create_single_log(user_id, target, action, description):
         raise e
 
 
+def create_purchase_destroy_log(user_id, target, action, description):
+    try:
+        logPurchaseDestroy = LogPurchaseDestroy(user_id=user_id,
+                                                target=target, action=action,
+                                                time=datetime.now(),
+                                                description=description,
+                                                )
+        logPurchaseDestroy.save()
+    except Exception as e:
+        raise e
+        
+        
 create_log_func = {
     'single':create_single_log,
     'computing':create_computing_log,
     'user':create_account_log,
-    'borrow':create_borrow_log
+    'borrow':create_borrow_log,
+    'purchase':create_purchase_destroy_log,
+    'destroy':create_purchase_destroy_log
 }
 

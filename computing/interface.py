@@ -391,6 +391,7 @@ def packed_update_computing(request, *args, **kwargs):
         desc = kwargs['update_content']
     else:
         desc = args[1]
+
     ret = update_computing(*args, **kwargs)
     create_log('computing', user_id = request.user.id,
         target=ret, action='update computing',

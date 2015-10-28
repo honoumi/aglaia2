@@ -29,6 +29,7 @@ def get_context_log(lg):
     dc['desc'] = lg.description
     return dc
 
+
 def get_borrow_loglist_context(id, is_actor):        
     l = LogBorrow.objects.filter(target__id=id).order_by('time')
     return get_context_list(l, lambda lg: dict(get_context_log(lg), repair_record = lg.repair_record))
@@ -62,6 +63,29 @@ def get_account_loglist_context(id, is_actor):
         l = sorted(chain(accountLog, brwLog, compLog, goodLog), key=attrgetter('time'), reverse=False)
     return get_context_list(l, get_context_log)
 
+
+def get_purchase_destroy_context_log(lg):
+    dc = {}
+    dc['actor'] = User.objects.get(id=lg.user_id)
+    dc['target'] = lg.get_target_str()
+    dc['action'] = lg.action
+    dc['time'] = lg.time
+    dc['desc'] = lg.description
+    sgl = lg.target
+    good = sgl.goods
+    tp = good.gtype    
+    props = []
+    for i in range(0,tp.get_pronum()):
+        props.append({'pro_name':tp.get_proname(i),
+                      'pro_value':good.get_pro(i)})
+    dc['prop'] = props    
+    return dc
+
+
+def get_purchase_destroy_context():
+    l = LogPurchaseDestroy.objects.filter().order_by('-time')
+    return get_context_list(l, get_purchase_destroy_context_log)
+    
 
 log_list_func = {
     'goods':get_goods_loglist_context,
@@ -106,8 +130,19 @@ def show_log(request):
         
     except Exception as e:
         return show_message(request, 'Show log Error: ' + e.__str__())
+
+
+
+@method_required('GET')
+@permission_required(PERM_VIEW_ALL)
+def show_purchase_destroy_list(request):
+    try:
+        llist = get_purchase_destroy_context()
+        return render(request, 'purchase_destroy_log.html', {
+            'user':get_context_user(request.user),
+            'logs': llist
+            })
         
         
-
-
-
+    except Exception as e:
+        return show_message(request, 'Show log Error: ' + e.__str__())
