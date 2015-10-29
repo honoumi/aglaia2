@@ -19,7 +19,7 @@
                         <div class="header">错误</div>
                         <p></p>
                     </div>
-                    <div class="three fields">
+                    <div class="four fields">
                         <div class="field fluid">
                             <label>实物名称</label>
                             <input placeholder="实物名称" type="text" name="name" id="name">
@@ -28,35 +28,40 @@
                             <label>起始SN号</label>
                             <input placeholder="实物SN号" type="text" name="sn" id="sn">
                         </div>
-                        <input type="hidden" value="purchase" name="type_name" id="type_name">
+                      <div class="field" id="type">
+                  <label>实物类型</label>
+                  <div class="ui selection dropdown fluid">
+                    <input type="hidden" value="{% if select_type != " " %} {{ select_type }} {% else %} {{ type_list.0 }} {% endif %}" name="type_name"id="type_name">
+                    <div class="text" id="type_name_text">{{ type_list.0 }}</div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu"> <!--type_list-->
+                      {% for type in type_list %}
+                        <div class="item type-element" data-value="{{ type }}">{{ type }}</div>
+                      {% endfor %}
+                    </div>
+                </div>
+              </div>
                         <div class="field fluid">
                             <label>实物数量</label>
                             <input placeholder="实物数量" type="text" id="quantity" disabled>
                         </div>
                     </div>
+                    <span>
+                        <div class="field" id="manufacturer">
+                            <label id="manufacturer_name">厂商</label>
+                            <input placeholder="厂商" type="text" name="manufacturer" id="manufacturer_value" />
+                        </div>
+                        <div class="field" id="version">
+                            <label id="version_name">型号</label>
+                            <input placeholder="型号" type="text" name="version" id="version_value" />
+                        </div>
+                            <div class="ten wide field" id="other">
+                                <label id="other_name">其它</label>
+                                <input type="text" name="other_value" id="other_value" />
+                            </div>
+                    </span>
                     <span id="properties">
-                        <div class="field" id="pro1">
-                            <label id="pro1_name">厂商</label>
-                            <input {% if request_purchase.pro1_value != " " %} value ="{{ request_purchase.pro1_value }}" {% else %} placeholder="厂商" {% endif %} type="text" name="pro1_value" id="pro1_value" />
-                        </div>
-                        <div class="field" id="pro2">
-                            <label id="pro2_name">型号</label>
-                            <input {% if request_purchase.pro2_value != " " %} value ="{{ request_purchase.pro2_value }}" {% else %} placeholder="型号" {% endif %} type="text" name="pro2_value" id="pro2_value" />
-                        </div>
-                        <div class="fields">
-                            <div class="three wide field" id="pro3">
-                                <label id="Label1">是否付款?</label>
-                                <input placeholder="是" type="text" name="pro3_value" id="pro3_value" />
-                            </div>
-                            <div class="three wide field" id="pro4">
-                                <label id="Label2">是否建账?</label>
-                                <input placeholder="是" type="text" name="pro4_value" id="pro4_value" />
-                            </div>
-                            <div class="ten wide field" id="pro5">
-                                <label id="Label3">其它</label>
-                                <input type="text" name="pro5_value" id="pro5_value" />
-                            </div>
-                        </div>
+
                     </span>
                     <button type="button" class="ui green button" id="submit-button">提交</button>
                 </div>
@@ -71,6 +76,35 @@
   <script>
       $(function () {
           // 更新数量
+          function update_type_pros() {
+              $.ajax({
+                  url: '{% url "goods.views.do_type_props" %}',
+                  type: 'POST',
+                  dataType: 'JSON',
+                  data:
+                  {
+                      type_name: $('#type_name').val()
+                  },
+              })
+              .done(function (data) {
+                  //从后端获得新数据
+                  $('#properties').children().remove();
+                  for (var i = 0 ; i < data.pro_names.length ; i++) {
+                      if (data.pro_names[i].length > 0) {
+                          $('#properties').append('<div class="field" id="pro' + (i + 1) + '">'
+                            + '<label id="pro' + (i + 1) + '_name">' + data.pro_names[i] + '</label>'
+                            + '<input placeholder="属性值" type="text" name="pro' + (i + 1) + '_value" id="pro' + (i + 1) + '_value">'
+                          + '</div>');
+                      }
+                      $('input').click(function () {
+                          $('#form-segment').removeClass('error');
+                      });
+                  }
+              })
+              .fail(function () {
+                  alert('服务器异常，无法修改实物类型');
+              });
+          }
           $('#sn').keydown(function () {
               var snArray = $('#sn').val().split(',');
               var snQuantity = 0;
@@ -83,6 +117,12 @@
           });
 
           $('.ui.dropdown').dropdown();
+
+          $('.type-element').click(function () {
+              //alert($('#type_name').val());
+              update_type_pros();
+          });
+          update_type_pros();
           //提交
           $('#submit-button').click(function () {
               var name = $("#name").val();
@@ -119,5 +159,8 @@
           });
 
       });
+
+
+ 
   </script>
 {% endblock %}

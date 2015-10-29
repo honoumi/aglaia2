@@ -126,7 +126,6 @@ def add_goods(request):
         return show_message(request, "Add goods failed: "+e.__str__())
 
 @method_required('POST')
-@permission_required(PERM_GOODS_AUTH, http_denied)
 def do_type_props(request):
     '''list all the properties' name of a type'''
     try:
@@ -581,18 +580,18 @@ def show_add_goods(request):
 @method_required('GET')
 def show_request_purchase(request):
     g = request.GET
-    pro1_value = ' '
-    pro2_value = ' '
-    if 'pro1_value' in g:
-        pro1_value = g['pro1_value']
-    if 'pro2_value' in g:
-        pro2_value = g['pro2_value']
+    select_type = ' '
+    if 'select_type' in g:
+        select_type = g.pop('select_type')
+    
     type_list = []
     for t in GType.objects.all():
         type_list.append(t.name)
     return render(request, "request_purchase.html", {
         'user': get_context_user(request.user),
-        'request_purchase' : { 'pro1_value' : pro1_value, 'pro2_value' : pro2_value }
+        "type_list": type_list,
+        'select_type': select_type,
+        'request_purchase' : g
     })
 
 @method_required('GET')
