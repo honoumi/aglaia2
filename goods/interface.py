@@ -192,6 +192,27 @@ def update_borrow(borrow_id, update_content):
     except:
         raise Exception("Error in update borrow")
 
+def update_purchase(purchase_id, update_content):
+    correct_keys = ['status', 'user_note', 'manager_note']
+    for key in update_content:
+        if not(key in correct_keys):
+            raise KeyError("The key: %s is wrong", key)
+    purchase = None
+    try:
+        purchase = Purchase.objects.get(id = purchase_id)
+    except:
+        raise PurchaseDoesNotExistError("Purchase does not exist")
+    try:
+        if 'status' in update_content:
+            purchase.status = update_content['status']
+        if 'user_note' in update_content:
+            purchase.user_note = update_content['user_note']
+        if 'manager_note' in update_content:
+            purchase.manager_note = update_content['manager_note']
+        purchase.save()
+        return purchase
+    except:
+        raise Exception("Error in update purchase")
 
 def delete_borrow(borrow_id):
     borrow = None
@@ -258,6 +279,7 @@ def packed_create_borrow(request, *args, **kwargs):
     else:
         desc = args[3]
     ret = create_borrow(*args, **kwargs)
+    
     create_log('borrow', user_id = request.user.id,
         target=ret, action='create borrow',
         description=desc)
@@ -288,3 +310,6 @@ def packed_update_borrow(request, *args, **kwargs):
 def packed_delete_borrow(request, *args, **kwargs):
     return delete_borrow(*args, **kwargs)
 
+def packed_update_purchase(request, *args, **kwargs):
+    ret = update_purchase(*args, **kwagrs)
+    

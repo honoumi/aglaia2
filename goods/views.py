@@ -194,9 +194,24 @@ def do_accept_borrow(request):
         return HttpResponseRedirect(reverse('goods.views.show_manage'))
     except Exception as e:
         return show_message(request, 'Accept borrow failed: '+e.__str__())
+    
+def do_accept_purchase(request):
+    try:
+        id = request.POST['id']
+        note = request.POST['note']
+        
+        pur = Purchase.objects.get(id = id)
+        
+        if not pur.status == PURCHASE_AUTHING_KEY:
+            return show_message(request, 'This Request is not under verifying')
+        packed_update_purchase(request, id,{'status':ACCEPTED_KEY, 'user_note':note}, log=get_accept_pur_log())
+        #我偷偷把邮件功能删了，你来打我啊
+        
+        return HttpResponseRedirect(reverse('goods.view.show_massage'))
+    except Exception as e:
+        return show_message(request, 'Accept purchase failed: '+e.__str__())
 
-
-
+        
 
 @method_required('POST')
 @permission_required(PERM_GOODS_AUTH)
@@ -217,8 +232,23 @@ def do_reject_borrow(request):
     except Exception as e:
         return show_message(request, 'Reject borrow failed: '+e.__str__())
 
-
-
+def do_reject_purchase(request):
+    try:
+        id = request.POST['id']
+        note = request.POST['note']
+        
+        pur = Purchase.objects.get(id=id)
+        
+        if not pur.status == PURCHASE_AUTHING_KEY:
+            return show_message(request, 'This Request is not under verifying!')
+        
+        packed_update_purchase(request, id, {'status':REJECTED_KEY, 'user_note':note}, log=get_reject_pur_log(pur))
+        #我又删了邮件功能，打我啊
+        
+        return HttpResponseRedirect(reverse('good.views.show_manage'))
+    except Exception as e:
+        return show_message(request, 'Reject purchase failed: '+e.__str__())
+        
 @method_required('POST')
 @permission_required(PERM_GOODS_AUTH)
 def do_finish_borrow(request):
@@ -240,8 +270,21 @@ def do_finish_borrow(request):
     except Exception as e:
         return show_message(request, 'Finish borrow failed: '+e.__str__())
 
-
-
+def do_finish_purchase(request):
+    try:
+        id = request.POST['id']
+        
+        pur = Purchase.objects.get(id = id)
+        
+        if not pur.status == ACCEPTED_KEY:
+            return show_message(request, 'This Request is not accepted!')
+        
+        packed_update_single(request, pur.single.id, {'status':AVALIABLE_KEY, 'user_name':pur.account.user.username}, log=get_good_purchased_log())
+        packed_update_borrow(request, id, {'status':AVALIABLE_KEY}, log = get_finish_purchase_log())
+        
+        return HttpResponseRedirect(reverse('goods.vies.show_manage'))
+    except Exception as e:
+        return show_message(request, 'Finish purchased failed: '+e.__str__())
 
 @method_required('POST')
 @permission_required(PERM_GOODS_AUTH)
@@ -690,7 +733,7 @@ def show_add_type(request):
 @method_required('GET')
 @permission_required(PERM_GOODS_AUTH)
 def show_manage(request):
-
+    
     b_req = packed_find_borrow(request, {'status':BORROW_AUTHING_KEY},{})
     b_pend = packed_find_borrow(request, {'status':ACCEPTED_KEY},{})
     r_req = packed_find_borrow(request, {'status':RETURN_AUTHING_KEY},{})
