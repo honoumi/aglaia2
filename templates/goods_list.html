@@ -122,10 +122,8 @@
                   </button>
                 </form>
              {% if user.type == "normal" %}
-             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
-                {% for pro in goods.prop %}
-                  <input type="hidden" name="pro.pro_name" value="{{ pro.pro_value }}"/>
-                {% endfor %}
+             <form action="/goods/show_request_exist_purchase" method="get" style="display:inline-block;">     
+                  <input type="hidden" name="id" value="{{ goods.id }}"/>
                   <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
                       <i class="archive icon"></i>
                   </button>
@@ -192,15 +190,8 @@
                   </button>
                 </form>
              {% if user.type == "normal" %}
-             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
-                {% for pro in goods.prop %}
-                  {% if pro.pro_name == "厂商" %}
-                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
-                  {% endif %}
-                  {% if pro.pro_name == "型号" %}
-                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
-                  {% endif %}
-                {% endfor %}
+             <form action="/goods/show_request_exist_purchase" method="get" style="display:inline-block;">     
+                  <input type="hidden" name="id" value="{{ goods.id }}"/>
                   <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
                       <i class="archive icon"></i>
                   </button>
@@ -267,15 +258,8 @@
                   </button>
                 </form>
              {% if user.type == "normal" %}
-             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
-                {% for pro in goods.prop %}
-                  {% if pro.pro_name == "厂商" %}
-                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
-                  {% endif %}
-                  {% if pro.pro_name == "型号" %}
-                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
-                  {% endif %}
-                {% endfor %}
+             <form action="/goods/show_request_exist_purchase" method="get" style="display:inline-block;">     
+                  <input type="hidden" name="id" value="{{ goods.id }}"/>
                   <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
                       <i class="archive icon"></i>
                   </button>
@@ -342,15 +326,8 @@
                   </button>
                 </form>
              {% if user.type == "normal" %}
-             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
-                {% for pro in goods.prop %}
-                  {% if pro.pro_name == "厂商" %}
-                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
-                  {% endif %}
-                  {% if pro.pro_name == "型号" %}
-                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
-                  {% endif %}
-                {% endfor %}
+             <form action="/goods/show_request_exist_purchase" method="get" style="display:inline-block;">     
+                  <input type="hidden" name="id" value="{{ goods.id }}"/>
                   <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
                       <i class="archive icon"></i>
                   </button>
@@ -417,15 +394,8 @@
                   </button>
                 </form>
              {% if user.type == "normal" %}
-             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
-                {% for pro in goods.prop %}
-                  {% if pro.pro_name == "厂商" %}
-                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
-                  {% endif %}
-                  {% if pro.pro_name == "型号" %}
-                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
-                  {% endif %}
-                {% endfor %}
+             <form action="/goods/show_request_exist_purchase" method="get" style="display:inline-block;">     
+                  <input type="hidden" name="id" value="{{ goods.id }}"/>
                   <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
                       <i class="archive icon"></i>
                   </button>
@@ -492,15 +462,8 @@
                   </button>
                 </form>
              {% if user.type == "normal" %}
-             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
-                {% for pro in goods.prop %}
-                  {% if pro.pro_name == "厂商" %}
-                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
-                  {% endif %}
-                  {% if pro.pro_name == "型号" %}
-                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
-                  {% endif %}
-                {% endfor %}
+             <form action="/goods/show_request_exist_purchase" method="get" style="display:inline-block;">     
+                  <input type="hidden" name="id" value="{{ goods.id }}"/>
                   <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
                       <i class="archive icon"></i>
                   </button>

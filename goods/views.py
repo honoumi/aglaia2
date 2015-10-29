@@ -67,7 +67,8 @@ def get_context_single(sgl):
     dc['note'] = sgl.note
     props = []
     for i in range(0,tp.get_pronum()):
-        props.append({'pro_name':tp.get_proname(i),
+        props.append({'pro_count': 'pro' + str(i),
+                      'pro_name':tp.get_proname(i),
                       'pro_value':good.get_pro(i)})
     dc['prop'] = props
     return dc
@@ -579,10 +580,7 @@ def show_add_goods(request):
 
 @method_required('GET')
 def show_request_purchase(request):
-    g = request.GET
-    select_type = ' '
-    if 'select_type' in g:
-        select_type = g.pop('select_type')
+
     
     type_list = []
     for t in GType.objects.all():
@@ -590,9 +588,24 @@ def show_request_purchase(request):
     return render(request, "request_purchase.html", {
         'user': get_context_user(request.user),
         "type_list": type_list,
-        'select_type': select_type,
-        'request_purchase' : g
     })
+
+@method_required('GET')
+def show_request_exist_purchase(request):
+    sgl = Single.objects.get(id=request.GET['id'])
+    pro_list = get_context_single(sgl)['prop']
+    
+    type_list = []
+    for t in GType.objects.all():
+        type_list.append(t.name)    
+        
+    return render(request, "request_exist_purchase.html", {
+        'user': get_context_user(request.user),
+        'type_list': type_list,
+        'type':sgl.goods.gtype.name,
+        'pro_list': pro_list,
+        })
+                                                    
 
 @method_required('GET')
 @permission_required(PERM_NORMAL)
