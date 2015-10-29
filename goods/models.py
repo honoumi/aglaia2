@@ -46,6 +46,10 @@ LOST_KEY = 'lo'
 LOST = 'lost'
 DAMAGED_KEY = 'da'
 DAMAGED = 'damaged'
+PURCHASE_AUTHING_KEY = 'pa'
+PURCHASE_AUTHING = 'purchase_authing'
+PURCHASED_KEY = 'pd'
+PURCHASED = 'purchased'
 
 
 class GType(models.Model):
@@ -176,3 +180,18 @@ class Borrow(models.Model):
     manager_note = models.CharField(max_length=1000)
     def __str__(self):
         return str(self.single.goods.name) + '-' + str(self.single.sn)
+
+class Purchase(models.Model):
+    STATUS_CHOICES = (
+        (PURCHASE_AUTHING_KEY, PURCHASE_AUTHING),
+        (AVALIABLE_KEY,AVALIABLE),
+        (REJECTED_KEY, REJECTED),
+        (ACCEPTED_KEY, ACCEPTED),
+    )
+    account = models.ForeignKey(Account, default=None)
+    single = models.ForeignKey(Single)
+    status = models.CharField(max_length=5, choices=STATUS_CHOICES)
+    user_note = models.CharField(max_length=1000)
+    manager_note = models.CharField(max_length=1000)
+    def __str__(self):
+        return str(self.single.goods.name) + '-' + str(self.single.sn) 
