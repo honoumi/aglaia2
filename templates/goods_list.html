@@ -113,7 +113,7 @@
                 {% if user.type != "normal" %}
                 <div class="circular ui icon orange button tiny do-unavailable" data-variation="inverted" data-content="设置为不在库"><i class="icon ban circle"></i></div>
                 <div class="circular ui icon black button tiny trash-destroy" data-variation="inverted" data-content="销毁"><i class="icon trash"></i></div>
-                {% endif %}
+                  {% endif %}
                 <form action="{% url "log.views.show_log" %}" method="get" style="display:inline-block;">
                   <input type="hidden" name="id" value="{{ goods.id }}">
                   <input type="hidden" name="type" value="goods">
@@ -121,6 +121,21 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+             {% if user.type == "normal" %}
+             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
+                {% for pro in goods.prop %}
+                  {% if pro.pro_name == "厂商" %}
+                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
+                  {% endif %}
+                  {% if pro.pro_name == "型号" %}
+                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
+                  {% endif %}
+                {% endfor %}
+                  <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
+                      <i class="archive icon"></i>
+                  </button>
+                </form>
+             {% endif %}
                 <div class = "ui circular tiny inverted icon teal button">
             <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
                   <h5 class="ui header">发送邮件</h5>
@@ -143,9 +158,9 @@
                   <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
                   </form>
                   <script type="text/javascript">
-                    $(".agree-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".agree-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>'>
                   <i class="mail icon"></i>
                 </a>
@@ -181,6 +196,21 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+             {% if user.type == "normal" %}
+             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
+                {% for pro in goods.prop %}
+                  {% if pro.pro_name == "厂商" %}
+                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
+                  {% endif %}
+                  {% if pro.pro_name == "型号" %}
+                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
+                  {% endif %}
+                {% endfor %}
+                  <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
+                      <i class="archive icon"></i>
+                  </button>
+                </form>
+             {% endif %}
                   <div class = "ui circular tiny inverted icon teal button">
             <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
                   <h5 class="ui header">发送邮件</h5>
@@ -203,9 +233,9 @@
                   <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
                   </form>
                   <script type="text/javascript">
-                    $(".agree-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".agree-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>'>
                   <i class="mail icon"></i>
                 </a>
@@ -241,6 +271,21 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+             {% if user.type == "normal" %}
+             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
+                {% for pro in goods.prop %}
+                  {% if pro.pro_name == "厂商" %}
+                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
+                  {% endif %}
+                  {% if pro.pro_name == "型号" %}
+                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
+                  {% endif %}
+                {% endfor %}
+                  <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
+                      <i class="archive icon"></i>
+                  </button>
+                </form>
+             {% endif %}
                   <div class = "ui circular tiny inverted icon teal button">
             <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
                   <h5 class="ui header">发送邮件</h5>
@@ -263,9 +308,9 @@
                   <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
                   </form>
                   <script type="text/javascript">
-                    $(".agree-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".agree-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>'>
                   <i class="mail icon"></i>
                 </a>
@@ -301,6 +346,21 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+             {% if user.type == "normal" %}
+             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
+                {% for pro in goods.prop %}
+                  {% if pro.pro_name == "厂商" %}
+                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
+                  {% endif %}
+                  {% if pro.pro_name == "型号" %}
+                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
+                  {% endif %}
+                {% endfor %}
+                  <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
+                      <i class="archive icon"></i>
+                  </button>
+                </form>
+             {% endif %}
                   <div class = "ui circular tiny inverted icon teal button">
             <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
                   <h5 class="ui header">发送邮件</h5>
@@ -323,9 +383,9 @@
                   <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
                   </form>
                   <script type="text/javascript">
-                    $(".agree-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".agree-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>'>
                   <i class="mail icon"></i>
                 </a>
@@ -361,6 +421,21 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+             {% if user.type == "normal" %}
+             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
+                {% for pro in goods.prop %}
+                  {% if pro.pro_name == "厂商" %}
+                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
+                  {% endif %}
+                  {% if pro.pro_name == "型号" %}
+                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
+                  {% endif %}
+                {% endfor %}
+                  <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
+                      <i class="archive icon"></i>
+                  </button>
+                </form>
+             {% endif %}
                   <div class = "ui circular tiny inverted icon teal button">
             <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
                   <h5 class="ui header">发送邮件</h5>
@@ -383,9 +458,9 @@
                   <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
                   </form>
                   <script type="text/javascript">
-                    $(".agree-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".agree-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>'>
                   <i class="mail icon"></i>
                 </a>
@@ -421,6 +496,21 @@
                       <i class="unordered list icon"></i>
                   </button>
                 </form>
+             {% if user.type == "normal" %}
+             <form action="/goods/show_request_purchase" method="get" style="display:inline-block;">     
+                {% for pro in goods.prop %}
+                  {% if pro.pro_name == "厂商" %}
+                  <input type="hidden" name="pro1_value" value="{{ pro.pro_value }}"/>
+                  {% endif %}
+                  {% if pro.pro_name == "型号" %}
+                    <input type="hidden" name="pro2_value" value="{{ pro.pro_value }}" />
+                  {% endif %}
+                {% endfor %}
+                  <button type="submit" class="ui circular tiny inverted icon green tip button" data-content="申请采购">
+                      <i class="archive icon"></i>
+                  </button>
+                </form>
+             {% endif %}
                   <div class = "ui circular tiny inverted icon teal button">
             <a class="item agree-button" data-variation="inverted" data-position="top center" data-html='
                   <h5 class="ui header">发送邮件</h5>
@@ -443,9 +533,9 @@
                   <div class="positive ui tiny circular button floated right fluid agree-confirm-button">确认同意</div>
                   </form>
                   <script type="text/javascript">
-                    $(".agree-confirm-button").click(function(){
-                      $(this).parent().trigger("submit");
-                    });
+                      $(".agree-confirm-button").click(function () {
+                          $(this).parent().trigger("submit");
+                      });
                   </script>'>
                   <i class="mail icon"></i>
                 </a>
@@ -517,74 +607,74 @@
 
 {% block js %}
   <script>
-    var do_borrow = '{% url "goods.views.do_borrow" %}';
-    var do_set_unavailable = '{% url "goods.views.do_set_unavailable" %}';
-    var do_set_available = '{% url "goods.views.do_set_available" %}';
-    var do_destroy = '{% url "goods.views.do_destroy" %}';
-    $(function(){
-       $('.agree-button').popup({
-      on: 'click'
-    });
-      $('.ui.dropdown').dropdown();
-      $('.config-detail').popup({
-        on: 'hover'
+      var do_borrow = '{% url "goods.views.do_borrow" %}';
+      var do_set_unavailable = '{% url "goods.views.do_set_unavailable" %}';
+      var do_set_available = '{% url "goods.views.do_set_available" %}';
+      var do_destroy = '{% url "goods.views.do_destroy" %}';
+      $(function () {
+          $('.agree-button').popup({
+              on: 'click'
+          });
+          $('.ui.dropdown').dropdown();
+          $('.config-detail').popup({
+              on: 'hover'
+          });
+          $('.borrow-goods').popup({
+              on: 'hover'
+          });
+          $('.borrow-goods').click(function () {
+              $('#post-action-form').attr('action', do_borrow);
+              $('#post-action-header').text('借用实物');
+              $('#id').val($(this).parent().children('.goods-id').text());
+              $('#sn').val($(this).parent().parent().children('.goods-sn').text());
+              $('#name').val($(this).parent().parent().children('.goods-name').text());
+              $('#type').val($(this).parent().parent().children('.goods-typename').text());
+              $('post-action-confirm-content').text('借用');
+              $('.modal#post-action').modal('show');
+          });
+          $('.do-available').popup({
+              on: 'hover'
+          });
+          $('.do-available').click(function () {
+              $('#post-action-form').attr('action', do_set_available);
+              $('#post-action-header').text('设置为在库');
+              $('#id').val($(this).parent().children('.goods-id').text());
+              $('#sn').val($(this).parent().parent().children('.goods-sn').text());
+              $('#name').val($(this).parent().parent().children('.goods-name').text());
+              $('#type').val($(this).parent().parent().children('.goods-typename').text());
+              $('post-action-confirm-content').text('设置为在库');
+              $('.modal#post-action').modal('show');
+          });
+          $('.do-unavailable').popup({
+              on: 'hover'
+          });
+          $('.do-unavailable').click(function () {
+              $('#post-action-form').attr('action', do_set_unavailable);
+              $('#post-action-header').text('设置为不在库');
+              $('#id').val($(this).parent().children('.goods-id').text());
+              $('#sn').val($(this).parent().parent().children('.goods-sn').text());
+              $('#name').val($(this).parent().parent().children('.goods-name').text());
+              $('#type').val($(this).parent().parent().children('.goods-typename').text());
+              $('post-action-confirm-content').text('设置为不在库');
+              $('.modal#post-action').modal('show');
+          });
+          $('.trash-destroy').popup({
+              on: 'hover'
+          });
+          $('.trash-destroy').click(function () {
+              $('#post-action-form').attr('action', do_destroy);
+              $('#post-action-header').text('销毁');
+              $('#id').val($(this).parent().children('.goods-id').text());
+              $('#sn').val($(this).parent().parent().children('.goods-sn').text());
+              $('#name').val($(this).parent().parent().children('.goods-name').text());
+              $('#type').val($(this).parent().parent().children('.goods-typename').text());
+              $('post-action-confirm-content').text('销毁');
+              $('.modal#post-action').modal('show');
+          });
+          $('#post-action-confirm').click(function () {
+              $('#post-action-form').trigger('submit');
+          })
       });
-      $('.borrow-goods').popup({
-        on: 'hover'
-      });
-      $('.borrow-goods').click(function(){
-        $('#post-action-form').attr('action', do_borrow);
-        $('#post-action-header').text('借用实物');
-        $('#id').val($(this).parent().children('.goods-id').text());
-        $('#sn').val($(this).parent().parent().children('.goods-sn').text());
-        $('#name').val($(this).parent().parent().children('.goods-name').text());
-        $('#type').val($(this).parent().parent().children('.goods-typename').text());
-        $('post-action-confirm-content').text('借用');
-        $('.modal#post-action').modal('show');
-      });
-      $('.do-available').popup({
-        on: 'hover'
-      });
-      $('.do-available').click(function(){
-        $('#post-action-form').attr('action', do_set_available);
-        $('#post-action-header').text('设置为在库');
-        $('#id').val($(this).parent().children('.goods-id').text());
-        $('#sn').val($(this).parent().parent().children('.goods-sn').text());
-        $('#name').val($(this).parent().parent().children('.goods-name').text());
-        $('#type').val($(this).parent().parent().children('.goods-typename').text());
-        $('post-action-confirm-content').text('设置为在库');
-        $('.modal#post-action').modal('show');
-      });
-      $('.do-unavailable').popup({
-        on: 'hover'
-      });
-      $('.do-unavailable').click(function(){
-        $('#post-action-form').attr('action', do_set_unavailable);
-        $('#post-action-header').text('设置为不在库');
-        $('#id').val($(this).parent().children('.goods-id').text());
-        $('#sn').val($(this).parent().parent().children('.goods-sn').text());
-        $('#name').val($(this).parent().parent().children('.goods-name').text());
-        $('#type').val($(this).parent().parent().children('.goods-typename').text());
-        $('post-action-confirm-content').text('设置为不在库');
-        $('.modal#post-action').modal('show');
-      });
-      $('.trash-destroy').popup({
-        on: 'hover'
-      });
-      $('.trash-destroy').click(function(){
-        $('#post-action-form').attr('action', do_destroy);
-        $('#post-action-header').text('销毁');
-        $('#id').val($(this).parent().children('.goods-id').text());
-        $('#sn').val($(this).parent().parent().children('.goods-sn').text());
-        $('#name').val($(this).parent().parent().children('.goods-name').text());
-        $('#type').val($(this).parent().parent().children('.goods-typename').text());
-        $('post-action-confirm-content').text('销毁');
-        $('.modal#post-action').modal('show');
-      });
-      $('#post-action-confirm').click(function(){
-        $('#post-action-form').trigger('submit');
-      })
-    });
 
   </script>
 {% endblock %}

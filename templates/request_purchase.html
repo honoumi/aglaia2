@@ -37,11 +37,11 @@
                     <span id="properties">
                         <div class="field" id="pro1">
                             <label id="pro1_name">厂商</label>
-                            <input placeholder="厂商" type="text" name="pro1_value" id="pro1_value" />
+                            <input {% if request_purchase.pro1_value != " " %} value ="{{ request_purchase.pro1_value }}" {% else %} placeholder="厂商" {% endif %} type="text" name="pro1_value" id="pro1_value" />
                         </div>
                         <div class="field" id="pro2">
                             <label id="pro2_name">型号</label>
-                            <input placeholder="型号" type="text" name="pro2_value" id="pro2_value" />
+                            <input {% if request_purchase.pro2_value != " " %} value ="{{ request_purchase.pro2_value }}" {% else %} placeholder="型号" {% endif %} type="text" name="pro2_value" id="pro2_value" />
                         </div>
                         <div class="fields">
                             <div class="three wide field" id="pro3">
