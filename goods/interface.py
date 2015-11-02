@@ -82,6 +82,21 @@ def delete_goods(goods_id):
     goods.delete()
     return True
 
+def create_purchase( sn, status,account):
+#        single = None
+#    try:
+#        single = sgl
+        single = Single.objects.get(sn=sn)
+#    except:
+#        raise Exception("Invalid SN number")
+#    try:
+        purchase = Purchase(
+            single=single, status=status,
+            account=account)
+        purchase.save()
+#    except:
+#       raise Exception("Error in purchase create")
+        return purchase
 
 def create_single(goods, SN, status, user_name):
 
@@ -252,6 +267,9 @@ def packed_create_single(request, *args, **kwargs):
         target=sgl, action='create good',
         description=desc)
     return ret
+
+def packed_create_purchase(request, *args, **kwargs):
+    return create_purchase(*args, **kwargs)
 
 def packed_update_single(request, *args, **kwargs):
     desc = ''
