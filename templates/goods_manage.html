@@ -65,8 +65,8 @@
 	<thead>
 		<tr>
 			<th>实物</th>
-			<th>类型</th>
 			<th>厂商</th>
+			<th>型号</th>
 			<th>SN</th>
 			<th>申请人</th>
 			<th>说明</th>
@@ -77,8 +77,8 @@
 		{% for purchase in purchase_requests %}
 			<tr>
 				<td>{{purchase.goods_name}}</td>
-				<td>{{purchase.goods_type}}</td>
 				<td>{{purchase.goods_from}}</td>
+				<td>{{purchase.goods_version}}</td>
 				<td>{{purchase.goods_sn}}</td>
 				<td>{{purchase.purchaser_name}}
 				<td>{{purchase.note}}</td>
@@ -323,8 +323,8 @@
 	<thead>
 		<tr>
 			<th>实物</th>
-			<th>类型</th>
 			<th>厂商</th>
+			<th>型号</th>
 			<th>SN</th>
 			<th>申请人</th>
 			<th>说明</th>
@@ -335,8 +335,8 @@
 		{% for purchase in purchase_pending_requests %}
 			<tr>
 				<td>{{purchase.goods_name}}</td>
-				<td>{{purchase.goods_type}}</td>
 				<td>{{purchase.goods_from}}</td>
+				<td>{{purchase.goods_version}}</td>
 				<td>{{purchase.goods_sn}}</td>
 				<td>{{purchase.purchaser_name}}
 				<td>{{purchase.note}}</td>

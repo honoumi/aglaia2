@@ -1,0 +1,303 @@
+[33mcommit e5b020cac0d6718564527573ed02ba8f45ec6159[m
+Author: 程凯 <chengkaithu@foxmail.com>
+Date:   Mon Nov 2 17:03:26 2015 +0800
+
+    修改
+
+[33mcommit 413afe356fec0c5699b71acfd737f235b0aabba6[m
+Merge: b5a5a83 d3c1124
+Author: Duhuafeng <279211044@qq.com>
+Date:   Thu Oct 29 11:53:28 2015 +0800
+
+    Merge branch 'development' of ssh://stash.secoder.net:7999/mc/aglaia2 into development
+
+[33mcommit b5a5a83a7fdc7660e54473533a676c20d4b5bc6f[m
+Author: Duhuafeng <279211044@qq.com>
+Date:   Thu Oct 29 11:52:53 2015 +0800
+
+    管理员采购后端
+
+[33mcommit d3c1124c3deea0a773c823a60bc5b60743366d38[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 29 11:50:28 2015 +0800
+
+    申请采购新设备前端
+
+[33mcommit ded2eb9c23977442ac408540fe6d548ce1eefe43[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 29 09:20:29 2015 +0800
+
+    普通用户在物资列表申请采购已有物资前端
+
+[33mcommit f274397509ff24eed84f56d189208d07e9a70bac[m
+Merge: 96db181 a4145a0
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Wed Oct 28 19:41:15 2015 +0800
+
+    Merge branch 'development' of ssh://stash.secoder.net:7999/mc/aglaia2 into development
+
+[33mcommit 96db181f93dca9c291dbea3c66219c1869fd3f5d[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Wed Oct 28 19:40:55 2015 +0800
+
+    用户申请采购界面前端
+
+[33mcommit a4145a0fdf7e8ea70ef3dceae59c6c753d0e35d9[m
+Merge: d5082b2 4deaf09
+Author: Duhuafeng <279211044@qq.com>
+Date:   Wed Oct 28 18:45:57 2015 +0800
+
+    Merge branch 'development' of ssh://stash.secoder.net:7999/mc/aglaia2 into development
+
+[33mcommit d5082b2741e2caf546986383049407bac9fce32c[m
+Author: Duhuafeng <279211044@qq.com>
+Date:   Wed Oct 28 18:41:44 2015 +0800
+
+    采购管理员界面前端
+
+[33mcommit 4deaf09c910adbc02f58037481d1da1c949c5f1b[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Sun Oct 25 21:26:32 2015 +0800
+
+    销毁/采购日志
+
+[33mcommit 60f4b4e079b97613c072b68b4f0272d730839435[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Sun Oct 25 19:01:54 2015 +0800
+
+    增加销毁记录
+
+[33mcommit 896cfecd9cad0de460c72d61e8cad91c7e373864[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Sun Oct 25 18:41:59 2015 +0800
+
+    完成interface代码
+
+[33mcommit 5e2843c113503d007fb45aae8eeb983c0349c4c9[m
+Merge: 0fa9689 fe6f269
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Sun Oct 25 18:38:46 2015 +0800
+
+    Merge branch 'development' of ssh://stash.secoder.net:7999/mc/aglaia2 into development
+
+[33mcommit 0fa9689f6d6e18e57509d565c01ca921e851e15d[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Sun Oct 25 18:37:57 2015 +0800
+
+    增加采购/销毁记录
+
+[33mcommit fe6f26939347509a13783f38333cfe4a90fc46d5[m
+Merge: 9dabbeb de54506
+Author: 程凯 <chengkaithu@foxmail.com>
+Date:   Sun Oct 25 16:26:20 2015 +0800
+
+    Merge branch 'development' of ssh://stash.secoder.net:7999/mc/aglaia2 into development
+
+[33mcommit 9dabbeb3d6536121b18481816b6471e22def2cff[m
+Author: 程凯 <chengkaithu@foxmail.com>
+Date:   Sun Oct 25 15:57:05 2015 +0800
+
+    实物列表修改
+
+[33mcommit de54506886700a6e25e96f3e082d85c54c645a56[m
+Merge: dc4efb3 f109300
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 22 14:44:50 2015 +0800
+
+    消除冲突
+
+[33mcommit dc4efb39194b833d896913746b7cfd9a4e51cbe0[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 22 14:16:13 2015 +0800
+
+    消除1215错误
+
+[33mcommit f1093008fc4cbcac57ea19f1308629ecc968ad54[m
+Author: Duhuafeng <279211044@qq.com>
+Date:   Thu Oct 22 14:04:03 2015 +0800
+
+    all email ok
+
+[33mcommit f89e777061d15bfd1020cfb6d2945ab52dcd41c9[m
+Merge: 7d68f80 b6b868a
+Author: Duhuafeng <279211044@qq.com>
+Date:   Thu Oct 22 13:04:29 2015 +0800
+
+    Merge remote-tracking branch 'origin/development'
+
+[33mcommit 7d68f801a5b447afa380d5830b082905e4b02fe3[m
+Author: Duhuafeng <279211044@qq.com>
+Date:   Thu Oct 22 13:03:20 2015 +0800
+
+    邮件功能
+
+[33mcommit b6b868a710e7bcf780dd98492e9766757f2d4367[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 22 12:44:17 2015 +0800
+
+    增加管理员界面对数据标签的说明
+
+[33mcommit 76c919ed43e826cbdce80a215b5935ff94d7fa1d[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 22 12:06:12 2015 +0800
+
+    后端增加删除虚拟机功能
+
+[33mcommit 9ce90c54bba1c6efb5a8af7500de6ff022b1bc65[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 22 10:59:19 2015 +0800
+
+    增加管理员删除虚拟机的按钮
+
+[33mcommit d0a1de29dac1b0494032b919ac75f24fa72727d7[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Wed Oct 21 22:49:14 2015 +0800
+
+    修改管理员界面，增加筛选功能
+
+[33mcommit 143ee7efd119a3e847cdc2fd4b750e3407c4529a[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Wed Oct 21 20:25:51 2015 +0800
+
+    在前端用户视图实现数据标签的筛选功能
+
+[33mcommit 75762d48054559193462d4767989d21b8d1b1232[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Wed Oct 21 14:13:47 2015 +0800
+
+    修正前端显示bug，修正计算资源申请时重要数据标记错误的bug
+
+[33mcommit 4f5332de20e21ef362cfbfa41eef5e9341d253b3[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Wed Oct 21 13:43:10 2015 +0800
+
+    修改前端以及前后端接口，可以显示数据标签简短描述
+
+[33mcommit 1cfb50894ac3b05308b4783f0fd2d8405312c06a[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Wed Oct 21 12:43:54 2015 +0800
+
+    修改前后端接口以及后端与数据库接口，使得添加数据标签时可以附带简短描述
+
+[33mcommit f5c930874e413d01d5995620c940a46db09473c0[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Wed Oct 21 12:41:36 2015 +0800
+
+    在前端添加修改标签时的弹出框
+
+[33mcommit f26bbd5e9bdebc9ebf4cf6ac37228e51feefcc5c[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Sun Oct 18 00:38:58 2015 +0800
+
+    固定goods_manage.html的左侧栏
+
+[33mcommit c0083c666cf5bd36fa388eb77705724bd3538886[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Fri Oct 16 17:06:26 2015 +0800
+
+    修正多人同时借用一件物品时的bug
+
+[33mcommit e8deb4a9cff5c41c14a9dfd6845a66e2a72aeb11[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Fri Oct 16 14:24:32 2015 +0800
+
+    消除管理员不能查看维修记录的bug
+
+[33mcommit 97b9608fdd0f8bcbcaa483590946bce17112250f[m
+Merge: 03fc79a 566b55f
+Author: 程凯 <chengkaithu@foxmail.com>
+Date:   Thu Oct 15 19:15:50 2015 +0800
+
+    Merge branch 'feature' of ssh://stash.secoder.net:7999/mc/aglaia2 into feature
+
+[33mcommit 03fc79abb1d1b84d3207c89a8b645ca240f8e1f5[m
+Author: 程凯 <chengkaithu@foxmail.com>
+Date:   Thu Oct 15 19:07:03 2015 +0800
+
+    维修接口修改
+
+[33mcommit 566b55f4b1084a0a9bdfe6933708452f58cd9233[m
+Merge: b04bb74 8c66d90
+Author: Duhuafeng <279211044@qq.com>
+Date:   Thu Oct 15 19:02:31 2015 +0800
+
+    Merge branch 'feature' of ssh://stash.secoder.net:7999/mc/aglaia2 into feature
+
+[33mcommit b04bb74e9dc39869668d9e78a4d6d0cd985b44ad[m
+Author: Duhuafeng <279211044@qq.com>
+Date:   Thu Oct 15 19:02:14 2015 +0800
+
+    修改审批操作
+
+[33mcommit 8c66d90515d9782f79eea4b3de4031c94c8a942b[m
+Merge: a8fe600 20c89c8
+Author: 程凯 <chengkaithu@foxmail.com>
+Date:   Thu Oct 15 18:45:26 2015 +0800
+
+    Merge branch 'feature' of ssh://stash.secoder.net:7999/mc/aglaia2 into feature
+
+[33mcommit a8fe600759168d0d971a4226c8be46bb17a312ce[m
+Author: 程凯 <chengkaithu@foxmail.com>
+Date:   Thu Oct 15 18:30:39 2015 +0800
+
+    维修列表
+
+[33mcommit 450c2711b7d0d3dec6e284b77c40517740003865[m
+Author: 程凯 <chengkaithu@foxmail.com>
+Date:   Thu Oct 15 18:26:35 2015 +0800
+
+    增添维修记录
+
+[33mcommit 20c89c8bed73246185463179b5d95d11dd0ed59b[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 15 17:50:00 2015 +0800
+
+    修改do_repair_goods等接口函数
+
+[33mcommit 474b1c560a8208bab0934446538c824c3ae8e62f[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 15 15:41:56 2015 +0800
+
+    修正do_finish_repair和packed_update_borro的bug
+
+[33mcommit 7a7cf32c349015a57d6beda6e102c7f77a64c23a[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 15 10:39:00 2015 +0800
+
+    修改提交借用请求时创建借用记录失败的bugg
+
+[33mcommit 140816f597dfc61036abb745e3220f82eee6e20f[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Wed Oct 14 20:49:48 2015 +0800
+
+    增加数据库中logBorrow中repair_record项，修改数据库接口。修改前后端接口函数，可以接受post过来的维修现象等项
+
+[33mcommit 20a1e35c39a4914d33c1fff1010b2da2ee6dc092[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Mon Oct 12 22:55:39 2015 +0800
+
+    使普通用户只能查看自己借用的物品的记录
+
+[33mcommit 8e874040f4930bf7b6fbe257df669bf8568c4b12[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Mon Oct 12 20:19:32 2015 +0800
+
+    使普通用户可以查看物品维修信息
+
+[33mcommit f28a430f73d4299a28e50613e54a272b680f6ad0[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Sat Oct 10 14:36:32 2015 +0800
+
+    关闭邮件自动发送功能
+
+[33mcommit 288abe040215d8fd52159326502c34571331aef9[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 8 19:59:30 2015 +0800
+
+    init
+
+[33mcommit 434ecdbc46996aee59bc030ca5612f6141dbad92[m
+Author: zhangmingzhao <zhangmz13@mails.tsinghua.edu.cn>
+Date:   Thu Oct 8 19:43:36 2015 +0800
+
+    init
