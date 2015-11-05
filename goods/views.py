@@ -92,6 +92,11 @@ def get_context_userbrw(brw):
     dc['note'] = brw.manager_note
     return dc
 
+def get_context_purchase(pur):
+    dc = {}
+    dc['name'] = pur.account.real_name
+    dc['single'] = get_context_single(pur.single)
+    return dc
     
 def import_goods(request, gl):
     if "" in gl[0:3]:
@@ -303,7 +308,7 @@ def do_reject_purchase(request):
         if not pur.status == PURCHASE_AUTHING_KEY:
             return show_message(request, 'This Request is not under verifying!')
         
-        packed_update_purchase(request, id, {'status':REJECTED_KEY, 'user_note':note}, log=get_reject_pur_log(pur))
+        packed_update_purchase(request, id, {'status':REJECTED_KEY, 'user_note':note}, log='')
         #我又删了邮件功能，打我啊
         
         return HttpResponseRedirect(reverse('good.views.show_manage'))
@@ -848,6 +853,8 @@ def show_manage(request):
     r_req = packed_find_borrow(request, {'status':RETURN_AUTHING_KEY},{})
     r_pend = packed_find_borrow(request, {'status':RETURN_PENDING_KEY},{})
     
+    pr_req = Purchase.objects.all()
+    
 
     rp_apply = packed_find_borrow(request, {'status':REPAIR_APPLY_KEY},{})
     rp_pend = packed_find_borrow(request, {'status':REPAIR_PEND_KEY},{})
@@ -858,6 +865,9 @@ def show_manage(request):
     b_pend_list = get_context_list(b_pend, get_context_borrow)
     r_req_list = get_context_list(r_req, get_context_borrow)
     r_pend_list = get_context_list(r_pend, get_context_borrow)
+    
+    pr_req_list = get_context_list(pr_req, get_context_purchase)
+    print(pr_req_list)   ###################################################
 
     rp_apply_list = get_context_list(rp_apply, get_context_borrow)
     rp_pend_list = get_context_list(rp_pend, get_context_borrow)
@@ -872,8 +882,8 @@ def show_manage(request):
         'torepair_requests': rp_apply_list,
         'repair_requests': rp_pend_list,
         'repairing_requests': rping_list,
-        'repaired_requests': rped_list
-
+        'repaired_requests': rped_list,
+        'purchase_requests': pr_req_list
     })
 
 @method_required('GET')

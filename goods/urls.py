@@ -38,5 +38,4 @@ urlpatterns = patterns("goods.views",
                        url(r'^download_excel_template$', 'download_excel_template'),
                        url(r'^do_purchase$', "do_purchase"),
                        url(r'^show_request_exist_purchase', "show_request_exist_purchase")
-
                        )
