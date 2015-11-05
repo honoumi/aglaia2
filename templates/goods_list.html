@@ -29,6 +29,44 @@
 <br/>
 {% endif %}
 
+{% if user.type != "normal" %}
+
+
+<form id="uploadimg-form"  action="/goods/do_upload_excel" method="post" enctype="multipart/form-data">  
+    <div class="ui blue button  fluid upload file" >选择文件
+    <input type="file"  style="opacity:0"  name="excel" id="file"/>
+    </div>
+    <br />
+    <input id="fileBtn" class="ui blue button  fluid upload file" type="submit"  value="文件上传"/>
+        </form> 
+    
+<br/>
+<a class="ui yellow button  fluid download file" href="/goods/download_excel_template">下载表格模板</a>
+<br/>
+<a class="ui red button  fluid download file" href="/goods/download_excel/1/">下载表格一</a>
+<br/>
+<a class="ui orange button  fluid downloadto file" href="/goods/download_excel/2/">下载表格二</a>
+{% endif %}
+
+<script type="text/javascript">  
+    $(function () {
+        $("#uploadimg-form").resetForm().validate({
+            rules: {
+                "fileUpload": {
+                    required: true,
+                    accept: "xls"
+                }
+            },
+            messages: {
+                "fileUpload": {
+                    required: "请选择上传文件",
+                    accept: "文件格式不支持，请上传 xls 格式的文件"
+                }
+            }
+        });
+    });
+</script>
+
   <div class="ui vertical menu">
     <div class="header item">
       <i class="cloud icon"></i>
