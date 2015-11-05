@@ -96,8 +96,10 @@ def get_context_userbrw(brw):
 def import_goods(request, gl):
     if "" in gl[0:3]:
         raise Exception('value cannot be null')
-    
-    sn = gl[0]
+    try:
+        sn = str(int(float(gl[0])))
+    except Exception as e:
+        raise Exception('sn号必须为纯数字! ')
     name = gl[1]
     type_name = gl[2]
     
@@ -108,7 +110,7 @@ def import_goods(request, gl):
     
     type_value = []
     for i in range(tp.get_pronum()):
-        type_value.append(gl[3+i])
+        type_value.append(str(gl[3+i]))
         
     gd = packed_create_goods(request, name, tp, type_value)
     sns = [sn]
@@ -263,7 +265,7 @@ def do_accept_purchase(request):
         
         if not pur.status == PURCHASE_AUTHING_KEY:
             return show_message(request, 'This Request is not under verifying')
-        packed_update_purchase(request, id,{'status':ACCEPTED_KEY, 'user_note':note}, log=get_accept_pur_log())
+        packed_update_purchase(request, id,{'status':ACCEPTED_KEY, 'user_note':note})
         #我偷偷把邮件功能删了，你来打我啊
         
         return HttpResponseRedirect(reverse('goods.view.show_massage'))
@@ -845,6 +847,7 @@ def show_manage(request):
     b_pend = packed_find_borrow(request, {'status':ACCEPTED_KEY},{})
     r_req = packed_find_borrow(request, {'status':RETURN_AUTHING_KEY},{})
     r_pend = packed_find_borrow(request, {'status':RETURN_PENDING_KEY},{})
+    
 
     rp_apply = packed_find_borrow(request, {'status':REPAIR_APPLY_KEY},{})
     rp_pend = packed_find_borrow(request, {'status':REPAIR_PEND_KEY},{})
@@ -870,6 +873,7 @@ def show_manage(request):
         'repair_requests': rp_pend_list,
         'repairing_requests': rping_list,
         'repaired_requests': rped_list
+
     })
 
 @method_required('GET')
@@ -892,14 +896,14 @@ def show_borrow_list(request):
 @method_required('POST')
 @permission_required(PERM_GOODS_AUTH)
 def do_upload_excel(request):
-    try:
+#    try:
         upload_excel = request.FILES['excel']
     
-        if upload_excel.split('.')[-1] != 'xlsx':
+        if upload_excel.name.split('.')[-1] != 'xlsx':
             return show_message(request, '不是xlsx文件!')
     
         with open('data/temp_upload_excel.xlsx', 'wb') as f:
-            f.wirte(upload_excel.read())
+            f.write(upload_excel.read())
     
         excel = xlrd.open_workbook('data/temp_upload_excel.xlsx')
         table = excel.sheets()[0]
@@ -907,13 +911,13 @@ def do_upload_excel(request):
         if table.row_values(0)[0:3] != ['sn', '资源', '类型']:
             return show_message(request, '上传excel格式错误! ')
     
-        for i in range(1,table.nrows):
+        for i in range(1, table.nrows):
             import_goods(request, table.row_values(i))
     
         return HttpResponseRedirect(reverse('goods.views.show_list'))
 
-    except Exception as e:
-        return show_message(request, 'Error : ' + e.__str__())
+#    except Exception as e:
+#        return show_message(request, 'Error : ' + e.__str__())
     
     
 

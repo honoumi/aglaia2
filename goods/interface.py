@@ -82,11 +82,11 @@ def delete_goods(goods_id):
     goods.delete()
     return True
 
-def create_purchase( sn, status,account):
+def create_purchase( sns, status,account):
 #        single = None
 #    try:
 #        single = sgl
-        single = Single.objects.get(sn=sn)
+        single = Single.objects.get(sn=sns[0])
 #    except:
 #        raise Exception("Invalid SN number")
 #    try:
