@@ -32,6 +32,7 @@ sgl_sta_map = {
     'borrowed':BORROWED_KEY,
     'lost':LOST_KEY,
     'repairing':REPAIRING_KEY,
+    'purchasing':PURCHASE_AUTHING_KEY
 }
 
 
@@ -594,6 +595,34 @@ def do_borrow(request):
     except Exception as e:
         return show_message(request, 'Borrow request failed: ' + e.__str__())
 
+@method_required('POST')
+@permission_required(PERM_NORMAL)
+def do_purchase(request):
+#    try:
+        name = request.POST['name']
+        type_name = request.POST['type_name']
+
+        tp = packed_find_gtypes(request, type_name)
+        if not tp or len(tp) > 1:
+            raise Exception('No Such Goods Type')
+        tp = tp[0]
+
+        type_value = []
+        for i in range(1, tp.get_pronum()+1):
+            prop_key = "pro" + str(i) + "_value"
+            type_value.append(request.POST[prop_key])
+
+        gd = packed_create_goods(request, name, tp, type_value)
+        sns = request.POST['sn'].split(',')
+        sgl=packed_create_single(request, gd, sns, PURCHASE_AUTHING_KEY, '')
+        account = Account.objects.get(user=request.user)
+        packed_create_purchase(request,sns, PURCHASE_AUTHING_KEY,  account)
+
+        return HttpResponseRedirect(reverse("goods.views.show_list"))
+#    except KeyError as e:
+#        return show_message(request, 'Key not found: '+e.__str__())
+#    except Exception as e:
+#        return show_message(request, "Purchase failed: "+e.__str__())
 
 @method_required('POST')
 @permission_required(PERM_NORMAL)
