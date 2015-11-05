@@ -94,6 +94,7 @@ def get_context_userbrw(brw):
 
 def get_context_purchase(pur):
     dc = {}
+    dc['id'] = pur.id
     dc['name'] = pur.account.real_name
     dc['single'] = get_context_single(pur.single)
     return dc
@@ -262,7 +263,7 @@ def do_accept_borrow(request):
         return show_message(request, 'Accept borrow failed: '+e.__str__())
     
 def do_accept_purchase(request):
-    try:
+#    try:
         id = request.POST['id']
         note = request.POST['note']
         
@@ -273,9 +274,9 @@ def do_accept_purchase(request):
         packed_update_purchase(request, id,{'status':ACCEPTED_KEY, 'user_note':note})
         #我偷偷把邮件功能删了，你来打我啊
         
-        return HttpResponseRedirect(reverse('goods.view.show_massage'))
-    except Exception as e:
-        return show_message(request, 'Accept purchase failed: '+e.__str__())
+        return show_message(request, '付款成功!')
+#    except Exception as e:
+#        return show_message(request, 'Accept purchase failed: '+e.__str__())
 
         
 
@@ -311,7 +312,7 @@ def do_reject_purchase(request):
         packed_update_purchase(request, id, {'status':REJECTED_KEY, 'user_note':note}, log='')
         #我又删了邮件功能，打我啊
         
-        return HttpResponseRedirect(reverse('good.views.show_manage'))
+        return show_message(request, '已拒绝付款!')
     except Exception as e:
         return show_message(request, 'Reject purchase failed: '+e.__str__())
         
@@ -345,8 +346,8 @@ def do_finish_purchase(request):
         if not pur.status == ACCEPTED_KEY:
             return show_message(request, 'This Request is not accepted!')
         
-        packed_update_single(request, pur.single.id, {'status':AVALIABLE_KEY, 'user_name':pur.account.user.username}, log=get_good_purchased_log())
-        packed_update_borrow(request, id, {'status':AVALIABLE_KEY}, log = get_finish_purchase_log())
+        packed_update_single(request, pur.single.id, {'status':AVALIABLE_KEY, 'user_name':pur.account.user.username}, log='')
+        packed_update_borrow(request, id, {'status':AVALIABLE_KEY}, log = '')
         
         return HttpResponseRedirect(reverse('goods.vies.show_manage'))
     except Exception as e:
@@ -853,8 +854,9 @@ def show_manage(request):
     r_req = packed_find_borrow(request, {'status':RETURN_AUTHING_KEY},{})
     r_pend = packed_find_borrow(request, {'status':RETURN_PENDING_KEY},{})
     
-    pr_req = Purchase.objects.all()
-    
+    pr_req = Purchase.objects.filter(status=PURCHASE_AUTHING_KEY)
+    pr_pend = Purchase.objects.filter(status=ACCEPTED_KEY)
+
 
     rp_apply = packed_find_borrow(request, {'status':REPAIR_APPLY_KEY},{})
     rp_pend = packed_find_borrow(request, {'status':REPAIR_PEND_KEY},{})
@@ -867,7 +869,8 @@ def show_manage(request):
     r_pend_list = get_context_list(r_pend, get_context_borrow)
     
     pr_req_list = get_context_list(pr_req, get_context_purchase)
-    print(pr_req_list)   ###################################################
+    pr_pend_list = get_context_list(pr_pend, get_context_purchase)
+
 
     rp_apply_list = get_context_list(rp_apply, get_context_borrow)
     rp_pend_list = get_context_list(rp_pend, get_context_borrow)
@@ -883,7 +886,8 @@ def show_manage(request):
         'repair_requests': rp_pend_list,
         'repairing_requests': rping_list,
         'repaired_requests': rped_list,
-        'purchase_requests': pr_req_list
+        'purchase_requests': pr_req_list,
+        'purchase_pending_requests': pr_pend_list
     })
 
 @method_required('GET')

@@ -216,7 +216,8 @@ def update_purchase(purchase_id, update_content):
     try:
         purchase = Purchase.objects.get(id = purchase_id)
     except:
-        raise PurchaseDoesNotExistError("Purchase does not exist")
+ #       raise PurchaseDoesNotExistError("Purchase does not exist")
+        pass
     try:
         if 'status' in update_content:
             purchase.status = update_content['status']
