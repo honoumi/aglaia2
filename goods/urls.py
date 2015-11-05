@@ -32,5 +32,8 @@ urlpatterns = patterns("goods.views",
                        url(r"^do_reject_repair", "do_reject_repair"),
                        url(r"^show_borrow_list", "show_borrow_list"),
                        url(r'^show_request_purchase$', "show_request_purchase"),
-                       url(r'^show_request_exist_purchase', "show_request_exist_purchase")
+                       url(r'^show_request_exist_purchase', "show_request_exist_purchase"),
+                       url(r'^do_upload_excel$', "do_upload_excel"),
+                       url(r'^download_excel/([1,2])/$', "download_excel"),
+                       url(r'^download_excel_template$', 'download_excel_template')
                        )

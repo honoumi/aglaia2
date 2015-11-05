@@ -4,3 +4,5 @@
 test report/
 .settings/
 db.sqlite3
+data/temp_download.xls
+data/temp_upload_excel.xlsx

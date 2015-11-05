@@ -22,7 +22,8 @@ from aglaia.mail_tools import *
 
 from computing.views import get_context_computing, get_context_pack
 import json
-
+import xlrd
+import xlwt
 
 sgl_sta_map = {
     'available':AVALIABLE_KEY,
@@ -90,7 +91,64 @@ def get_context_userbrw(brw):
     dc['note'] = brw.manager_note
     return dc
 
-
+    
+def import_goods(request, gl):
+    if "" in gl[0:3]:
+        raise Exception('value cannot be null')
+    
+    sn = gl[0]
+    name = gl[1]
+    type_name = gl[2]
+    
+    tp = find_gtypes(type_name)
+    if not tp or len(tp) > 1:
+        raise Exception('No Such Goods Type')
+    tp = tp[0]
+    
+    type_value = []
+    for i in range(tp.get_pronum()):
+        type_value.append(gl[3+i])
+        
+    gd = packed_create_goods(request, name, tp, type_value)
+    sns = [sn]
+    packed_create_single(request, gd, sns, AVALIABLE_KEY, '')
+    
+    
+def init_download_excel(request, num):
+    f = xlwt.Workbook()
+    table = f.add_sheet('Sheet1')
+    
+    def add_a_row(row, lst):
+        for i in range(len(lst)):
+            table.write(row, i, lst[i])
+    
+    if num == '1':
+        add_a_row(0, ['状态','sn', '资源', '类型', '属性1', '属性2', '属性3', '……'])
+    else:
+        add_a_row(0, ['sn', '资源', '类型', '属性1', '属性2', '属性3', '……'])
+    
+    singles = Single.objects.exclude(status=DESTROYED_KEY)\
+                .exclude(status=PURCHASE_AUTHING_KEY).exclude(status=PURCHASED_KEY)
+    sgl_list = get_context_list(singles, get_context_single)
+    
+    status_dict = {"available":"在库", "unavailable":"不在库", "borrowed":"已借出",
+                   "lost":"已挂失", "repairing":"维修中"}
+    
+    for i in range(len(sgl_list)):
+        now_sgl = sgl_list[i]
+        status = []
+        if num == '1':
+            status = [status_dict[now_sgl['status']]]
+            
+        sgl_data_list = [now_sgl['sn'], now_sgl['name'], now_sgl['type_name']]
+        
+        for pro in now_sgl['prop']:
+            sgl_data_list.append(pro['pro_value'])
+            
+        add_a_row(i+1, status + sgl_data_list)
+        
+    
+    f.save('data/temp_download.xls')
 
 #===============================================
 #===============================================
@@ -603,6 +661,7 @@ def do_repair_goods(request):
         return show_message(request, 'Repair apply failed: ' + e.__str__())
 
 
+
 #===============================================
 #===============================================
 #===============================================
@@ -798,4 +857,70 @@ def show_borrow_list(request):
             })
     except Exception as e:
         return show_message(request, 'Error when show borrows: ' + e.__str__())
+
+
+
+@method_required('POST')
+@permission_required(PERM_GOODS_AUTH)
+def do_upload_excel(request):
+    try:
+        upload_excel = request.FILES['excel']
+    
+        if upload_excel.split('.')[-1] != 'xlsx':
+            return show_message(request, '不是xlsx文件!')
+    
+        with open('data/temp_upload_excel.xlsx', 'wb') as f:
+            f.wirte(upload_excel.read())
+    
+        excel = xlrd.open_workbook('data/temp_upload_excel.xlsx')
+        table = excel.sheets()[0]
+        
+        if table.row_values(0)[0:3] != ['sn', '资源', '类型']:
+            return show_message(request, '上传excel格式错误! ')
+    
+        for i in range(1,table.nrows):
+            import_goods(request, table.row_values(i))
+    
+        return HttpResponseRedirect(reverse('goods.views.show_list'))
+
+    except Exception as e:
+        return show_message(request, 'Error : ' + e.__str__())
+    
+    
+
+@method_required('GET')
+@permission_required(PERM_GOODS_AUTH)
+def download_excel(request, num):
+    try:
+        init_download_excel(request, num)
+    
+        excel = b''
+        with open('data/temp_download.xls', 'rb') as f:
+            excel = f.read()
+        
+        response = HttpResponse(excel)
+        response['Content-Type'] = 'application/octet-stream'
+        response['Content-Disposition'] = 'attachment;filename="download_' + num + '.xls"'
+        
+        return response 
+    
+    except Exception as e:
+        return show_message(request, 'Error : ' + e.__str__())
+
+
+
+@method_required('GET')
+def download_excel_template(request):
+    excel = b''
+    with open('data/template.xlsx', 'rb') as f:
+        excel = f.read()
+        
+    response = HttpResponse(excel)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="template.xlsx"'
+    
+    return response
+
+
+        
 

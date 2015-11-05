@@ -311,5 +311,5 @@ def packed_delete_borrow(request, *args, **kwargs):
     return delete_borrow(*args, **kwargs)
 
 def packed_update_purchase(request, *args, **kwargs):
-    ret = update_purchase(*args, **kwagrs)
+    ret = update_purchase(*args, **kwargs)
     
