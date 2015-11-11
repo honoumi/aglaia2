@@ -60,88 +60,7 @@
 {% block content %}
 
 <!--采购请求列表 华峰到此一游LoL-->
-<h3 id="p-r" class="ui header top attached" style="margin-top:10px"><font color="#F05940">采购</font>请求列表</h3>
-<table class="ui small segment table attached">
-	<thead>
-		<tr>
-			<th>实物</th>
-			<th>SN</th>
-			<th>申请人</th>
-			<th>说明</th>
-			<th>操作</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for purchase in purchase_requests %}
-			<tr>
-				<td>{{purchase.single.name}}</td>
-				<td>{{purchase.single.sn}}</td>
-				<td>{{purchase.name}}
-				<td>{{purchase.note}}</td>
-				<td>
-					<a class="positive ui tiny circular button agree-button" data-variation="inverted" data-position="top center" data-html='
-	                  <span>
-		                  <h5 class="ui header">同意付款</h5>
-		                  <form method="post" action="{% url "goods.views.do_accept_purchase" %}">
-			                  <div class="ui form">
-			                    <div class="inline field" hidden>
-			                        <label><font color="#FFFFFF">请求编号</font></label>
-			                        <input type="text" placeholder="id" id="id" name="id" value="{{purchase.id}}">
-			                    </div>
-			                    <div class="inline field">
-			                        <label><font color="#FFFFFF">实物名称</font></label>
-			                        <input type="text" placeholder="实物名称" id="name" name="name" value="{{purchase.goods_name}}" disabled>
-			                    </div>
-			                    <div class="inline field">
-			                        <label><font color="#FFFFFF">附加说明</font></label>
-			                        <input type="text" placeholder="编辑说明" id="note" name="note" value="">
-			                    </div>
-			                  </div>
-		                  </form>
-		                  <div class="positive ui tiny circular button floated right fluid purchase-agree-confirm-button">确认同意</div>
-		                  <script type="text/javascript">
-							$(".purchase-agree-confirm-button").click(function(){
-						    	$(this).parent().children("form").trigger("submit");
-						    });
-		                  </script>
-	              	 </span>
-	          '>
-	          付款
-	        </a>
-	        <a class="negative ui tiny circular button reject-button" data-variation="inverted" data-position="top center" data-html='
-	                  <span>
-		                  <h5 class="ui header">拒绝购买</h5>
-		                  <form  method="post" action="{% url "goods.views.do_reject_purchase" %}">
-			                  <div class="ui form">
-			                    <div class="inline field" hidden>
-			                        <label><font color="#FFFFFF">请求编号</font></label>
-			                        <input type="text" placeholder="id" id="id" name="id" value="{{purchase.id}}">
-			                    </div>
-			                    <div class="inline field">
-			                        <label><font color="#FFFFFF">实物名称</font></label>
-			                        <input type="text" placeholder="实物名称" id="name" name="name" value="{{purchase.goods_name}}" disabled>
-			                    </div>
-			                    <div class="inline field">
-			                        <label><font color="#FFFFFF">附加说明</font></label>
-			                        <input type="text" placeholder="编辑说明" id="note" name="note" value="">
-			                    </div>
-			                  </div>
-		                  </form>
-		                  <div class="negative ui tiny circular button floated right fluid purchase-reject-confirm-button">确认拒绝</div>
-		                  <script type="text/javascript">
-							$(".purchase-reject-confirm-button").click(function(){
-						    	$(this).parent().children("form").trigger("submit");
-						    });
-		                  </script>
-	              	 </span>
-	              	 '>
-	          拒绝
-	        </a>
-				</td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
+
 
 <!--借用请求列表-->
 <h3 id="b-r" class="ui header top attached" style="margin-top:10px"><font color="#F05940">借用</font>请求列表</h3>
@@ -312,7 +231,97 @@
 </table>
 	
 <div class="ui divider"></div>
-
+<h3 id="p-r" class="ui header top attached" style="margin-top:10px"><font color="#F05940">采购</font>请求列表</h3>
+<table class="ui small segment table attached">
+	<thead>
+		<tr>
+			<th>实物</th>
+			<th>SN</th>
+			<th>申请人</th>
+			<th>说明</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for purchase in purchase_requests %}
+			<tr>
+				<td>{{purchase.single.name}}</td>
+				<td>{{purchase.single.sn}}</td>
+				<td>{{purchase.name}}
+				<td>
+				  <div class="ui basic button tiny tip" data-variation="inverted" data-html='
+					<div class="ui label" style="margin-top:5px">厂商 : {{ purchase.manufacturer }}</div>
+					<div class="ui label" style="margin-top:5px">型号 : {{ purchase.version }} </div>
+					<div class="ui label" style="margin-top:5px">其他: {{ purchase.other }}</div>
+                	{% for pro in purchase.single.prop %}
+                 	 {% if pro.pro_name != "" %}
+                	  <div class="ui label" style="margin-top:5px">{{ pro.pro_name }}: {{ pro.pro_value }}</div>
+                 	 {% endif %}
+              	   {% endfor %}'>详细</div></td>
+				<td>
+					<a class="positive ui tiny circular button agree-button" data-variation="inverted" data-position="top center" data-html='
+	                  <span>
+		                  <h5 class="ui header">同意付款</h5>
+		                  <form method="post" action="{% url "goods.views.do_accept_purchase" %}">
+			                  <div class="ui form">
+			                    <div class="inline field" hidden>
+			                        <label><font color="#FFFFFF">请求编号</font></label>
+			                        <input type="text" placeholder="id" id="id" name="id" value="{{purchase.id}}">
+			                    </div>
+			                    <div class="inline field">
+			                        <label><font color="#FFFFFF">实物名称</font></label>
+			                        <input type="text" placeholder="实物名称" id="name" name="name" value="{{purchase.goods_name}}" disabled>
+			                    </div>
+			                    <div class="inline field">
+			                        <label><font color="#FFFFFF">附加说明</font></label>
+			                        <input type="text" placeholder="编辑说明" id="note" name="note" value="">
+			                    </div>
+			                  </div>
+		                  </form>
+		                  <div class="positive ui tiny circular button floated right fluid purchase-agree-confirm-button">确认同意</div>
+		                  <script type="text/javascript">
+							$(".purchase-agree-confirm-button").click(function(){
+						    	$(this).parent().children("form").trigger("submit");
+						    });
+		                  </script>
+	              	 </span>
+	          '>
+	          付款
+	        </a>
+	        <a class="negative ui tiny circular button reject-button" data-variation="inverted" data-position="top center" data-html='
+	                  <span>
+		                  <h5 class="ui header">拒绝购买</h5>
+		                  <form  method="post" action="{% url "goods.views.do_reject_purchase" %}">
+			                  <div class="ui form">
+			                    <div class="inline field" hidden>
+			                        <label><font color="#FFFFFF">请求编号</font></label>
+			                        <input type="text" placeholder="id" id="id" name="id" value="{{purchase.id}}">
+			                    </div>
+			                    <div class="inline field">
+			                        <label><font color="#FFFFFF">实物名称</font></label>
+			                        <input type="text" placeholder="实物名称" id="name" name="name" value="{{purchase.goods_name}}" disabled>
+			                    </div>
+			                    <div class="inline field">
+			                        <label><font color="#FFFFFF">附加说明</font></label>
+			                        <input type="text" placeholder="编辑说明" id="note" name="note" value="">
+			                    </div>
+			                  </div>
+		                  </form>
+		                  <div class="negative ui tiny circular button floated right fluid purchase-reject-confirm-button">确认拒绝</div>
+		                  <script type="text/javascript">
+							$(".purchase-reject-confirm-button").click(function(){
+						    	$(this).parent().children("form").trigger("submit");
+						    });
+		                  </script>
+	              	 </span>
+	              	 '>
+	          拒绝
+	        </a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
 <!--已同意采购的请求列表 华峰到此一游LoL-->
 <h3 id="bp-r" class="ui header top attached" style="margin-top:10px">已同意<font color="#F05940">采购</font>的列表</h3>
 <table class="ui table segment small attached">
@@ -340,6 +349,7 @@
 			                  <div class="ui form">
 			                    <div class="inline field" hidden>
 			                        <label><font color="#FFFFFF">请求编号</font></label>
+			                        <input type="hidden" name="build_account" value="true">
 			                        <input type="text" placeholder="id" id="id" name="id" value="{{purchase.id}}">
 			                    </div>
 			                    <div class="inline field">
@@ -369,6 +379,7 @@
 			                  <div class="ui form">
 			                    <div class="inline field" hidden>
 			                        <label><font color="#FFFFFF">请求编号</font></label>
+			                        <input type="hidden" name="build_account" value="false">
 			                        <input type="text" placeholder="id" id="id" name="id" value="{{purchase.id}}">
 			                    </div>
 			                    <div class="inline field">

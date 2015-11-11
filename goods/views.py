@@ -97,6 +97,9 @@ def get_context_purchase(pur):
     dc['id'] = pur.id
     dc['name'] = pur.account.real_name
     dc['single'] = get_context_single(pur.single)
+    dc['manufacturer'] = pur.manufacturer
+    dc['version'] = pur.version
+    dc['other'] = pur.other
     return dc
     
 def import_goods(request, gl):
@@ -263,7 +266,7 @@ def do_accept_borrow(request):
         return show_message(request, 'Accept borrow failed: '+e.__str__())
     
 def do_accept_purchase(request):
-#    try:
+    try:
         id = request.POST['id']
         note = request.POST['note']
         
@@ -275,8 +278,8 @@ def do_accept_purchase(request):
         #我偷偷把邮件功能删了，你来打我啊
         
         return show_message(request, '付款成功!')
-#    except Exception as e:
-#        return show_message(request, 'Accept purchase failed: '+e.__str__())
+    except Exception as e:
+        return show_message(request, 'Accept purchase failed: '+e.__str__())
 
         
 
@@ -309,8 +312,9 @@ def do_reject_purchase(request):
         if not pur.status == PURCHASE_AUTHING_KEY:
             return show_message(request, 'This Request is not under verifying!')
         
-        packed_update_purchase(request, id, {'status':REJECTED_KEY, 'user_note':note}, log='')
-        #我又删了邮件功能，打我啊
+        packed_update_purchase(request, id, {'status':REJECTED_KEY, 'user_note':note})
+        #我又删了邮件功能，打我啊  
+        #打他，良辰必有重谢 23333333
         
         return show_message(request, '已拒绝付款!')
     except Exception as e:
@@ -340,16 +344,25 @@ def do_finish_borrow(request):
 def do_finish_purchase(request):
     try:
         id = request.POST['id']
+        desc = ''
+        if request.POST['build_account'] == 'true':
+            desc = '建账'
+        else:
+            desc = '不建账'
         
         pur = Purchase.objects.get(id = id)
         
         if not pur.status == ACCEPTED_KEY:
             return show_message(request, 'This Request is not accepted!')
         
+        packed_update_purchase(request, id, {'status':PURCHASED_KEY, 'user_note':''})
         packed_update_single(request, pur.single.id, {'status':AVALIABLE_KEY, 'user_name':pur.account.user.username}, log='')
         packed_update_borrow(request, id, {'status':AVALIABLE_KEY}, log = '')
+        create_log('purchase', user_id = request.user.id,
+                   target=Single.objects.get(id=pur.single.id), action='采购物品',
+                   description=desc)
         
-        return HttpResponseRedirect(reverse('goods.vies.show_manage'))
+        return HttpResponseRedirect(reverse('goods.views.show_manage'))
     except Exception as e:
         return show_message(request, 'Finish purchased failed: '+e.__str__())
 
@@ -606,9 +619,13 @@ def do_borrow(request):
 @method_required('POST')
 @permission_required(PERM_NORMAL)
 def do_purchase(request):
-#    try:
+    try:
         name = request.POST['name']
         type_name = request.POST['type_name']
+        manufacturer = request.POST['manufacturer']
+        version = request.POST['version']
+        other = request.POST['other_value']
+        
 
         tp = packed_find_gtypes(request, type_name)
         if not tp or len(tp) > 1:
@@ -624,13 +641,13 @@ def do_purchase(request):
         sns = request.POST['sn'].split(',')
         sgl=packed_create_single(request, gd, sns, PURCHASE_AUTHING_KEY, '')
         account = Account.objects.get(user=request.user)
-        packed_create_purchase(request,sns, PURCHASE_AUTHING_KEY,  account)
+        packed_create_purchase(request,sns, PURCHASE_AUTHING_KEY, account, manufacturer, version, other)
 
         return HttpResponseRedirect(reverse("goods.views.show_list"))
-#    except KeyError as e:
-#        return show_message(request, 'Key not found: '+e.__str__())
-#    except Exception as e:
-#        return show_message(request, "Purchase failed: "+e.__str__())
+    except KeyError as e:
+        return show_message(request, 'Key not found: '+e.__str__())
+    except Exception as e:
+        return show_message(request, "Purchase failed: "+e.__str__())
 
 @method_required('POST')
 @permission_required(PERM_NORMAL)
@@ -853,7 +870,7 @@ def show_manage(request):
     b_pend = packed_find_borrow(request, {'status':ACCEPTED_KEY},{})
     r_req = packed_find_borrow(request, {'status':RETURN_AUTHING_KEY},{})
     r_pend = packed_find_borrow(request, {'status':RETURN_PENDING_KEY},{})
-    
+
     pr_req = Purchase.objects.filter(status=PURCHASE_AUTHING_KEY)
     pr_pend = Purchase.objects.filter(status=ACCEPTED_KEY)
 
@@ -910,7 +927,7 @@ def show_borrow_list(request):
 @method_required('POST')
 @permission_required(PERM_GOODS_AUTH)
 def do_upload_excel(request):
-#    try:
+    try:
         upload_excel = request.FILES['excel']
     
         if upload_excel.name.split('.')[-1] != 'xlsx':
@@ -930,8 +947,8 @@ def do_upload_excel(request):
     
         return HttpResponseRedirect(reverse('goods.views.show_list'))
 
-#    except Exception as e:
-#        return show_message(request, 'Error : ' + e.__str__())
+    except Exception as e:
+        return show_message(request, 'Error : ' + e.__str__())
     
     
 

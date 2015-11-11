@@ -82,7 +82,7 @@ def delete_goods(goods_id):
     goods.delete()
     return True
 
-def create_purchase( sns, status,account):
+def create_purchase( sns, status,account, manufacturer, version, other):
 #        single = None
 #    try:
 #        single = sgl
@@ -92,7 +92,8 @@ def create_purchase( sns, status,account):
 #    try:
         purchase = Purchase(
             single=single, status=status,
-            account=account)
+            account=account, manufacturer=manufacturer,
+            version=version, other=other)
         purchase.save()
 #    except:
 #       raise Exception("Error in purchase create")

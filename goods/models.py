@@ -191,6 +191,9 @@ class Purchase(models.Model):
     account = models.ForeignKey(Account, default=None)
     single = models.ForeignKey(Single)
     status = models.CharField(max_length=5, choices=STATUS_CHOICES)
+    manufacturer = models.CharField(max_length=100)
+    version = models.CharField(max_length=200)
+    other = models.CharField(max_length=200)
     user_note = models.CharField(max_length=1000)
     manager_note = models.CharField(max_length=1000)
     def __str__(self):
