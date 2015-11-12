@@ -31,21 +31,35 @@
 
 {% if user.type != "normal" %}
 
+<div class="ui yellow button fluid excel_list_button">EXCEL</div>
+<br/>
 
-<form id="uploadimg-form"  action="/goods/do_upload_excel" method="post" enctype="multipart/form-data">  
-    <div class="ui blue button  fluid upload file" >选择文件
-    <input type="file"  style="opacity:0"  name="excel" id="file"/>
-    </div>
-    <br />
-    <input id="fileBtn" class="ui blue button  fluid upload file" type="submit"  value="文件上传"/>
-        </form> 
-    
-<br/>
-<a class="ui yellow button  fluid download file" href="/goods/download_excel_template">下载表格模板</a>
-<br/>
-<a class="ui red button  fluid download file" href="/goods/download_excel/1/">下载表格一</a>
-<br/>
-<a class="ui orange button  fluid downloadto file" href="/goods/download_excel/2/">下载表格二</a>
+<div class="excel_list" style="display: none">
+	<a class="ui yellow button  fluid download file" href="/goods/download_excel_template">下载表格模板</a>
+	<br/>
+	
+	<form id="uploadimg-form"  action="/goods/do_upload_excel" method="post" enctype="multipart/form-data">  
+	    <div class="field">
+		    <div class="ui action input">
+		        <input type="text" id="_attachmentName" disabled>
+		        
+		    	<label for="excel" class="ui icon button btn-file">
+	             <i class="file icon"></i>
+	             <input type="file" id="excel" name="excel" style="display: none">
+	             OPEN
+	        	</label>
+		    </div>
+		</div>
+	    <br />
+	    <input id="fileBtn" class="ui blue button  fluid upload file" type="submit"  value="文件上传"/>
+	        </form> 
+	    
+	<br/>
+	
+	<a class="ui red button  fluid download file" href="/goods/download_excel/1/">下载表格一</a>
+	<br/>
+	<a class="ui orange button  fluid downloadto file" href="/goods/download_excel/2/">下载表格二</a>
+</div>
 {% endif %}
 
 <script type="text/javascript">  
@@ -672,5 +686,56 @@
           })
       });
 
+      var fileExtentionRange = '.xlsx';
+      var MAX_SIZE = 30; // MB
+
+      $(document).on('change', '.btn-file :file', function() {
+          var input = $(this);
+
+          if (navigator.appVersion.indexOf("MSIE") != -1) { // IE
+              var label = input.val();
+
+              input.trigger('fileselect', [ 1, label, 0 ]);
+          } else {
+              var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+              var numFiles = input.get(0).files ? input.get(0).files.length : 1;
+              var size = input.get(0).files[0].size;
+
+              input.trigger('fileselect', [ numFiles, label, size ]);
+          }
+      });
+
+      $('.btn-file :file').on('fileselect', function(event, numFiles, label, size) {
+          $('#attachmentName').attr('name', 'excel'); // allow upload.
+
+          var postfix = label.substr(label.lastIndexOf('.'));
+          if (fileExtentionRange.indexOf(postfix.toLowerCase()) > -1) {
+              if (size > 1024 * 1024 * MAX_SIZE ) {
+                  alert('max size：' + MAX_SIZE + 'MB.');
+
+                  $('#attachmentName').removeAttr('name'); // cancel upload file.
+              } else {
+                  $('#_attachmentName').val(label);
+              }
+          } else {
+              alert('应该为xlsx文件！');
+
+              $('#attachmentName').removeAttr('name'); // cancel upload file.
+          }
+      });
+      
+      var is_excel_list_show = false;
+      
+      $('.excel_list_button').click(function ()  {
+    	  if(is_excel_list_show)	{
+    		  $('.excel_list').hide();
+    		  is_excel_list_show = false;
+    	  } else {
+    		  $('.excel_list').show();
+    		  is_excel_list_show = true;
+    	  }
+    	  
+      })
+      
   </script>
 {% endblock %}
