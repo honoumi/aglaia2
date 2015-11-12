@@ -96,6 +96,7 @@ def get_context_purchase(pur):
     dc = {}
     dc['id'] = pur.id
     dc['name'] = pur.account.real_name
+    dc['note'] = pur.user_note
     dc['single'] = get_context_single(pur.single)
     dc['manufacturer'] = pur.manufacturer
     dc['version'] = pur.version
@@ -277,7 +278,7 @@ def do_accept_purchase(request):
         packed_update_purchase(request, id,{'status':ACCEPTED_KEY, 'user_note':note})
         #我偷偷把邮件功能删了，你来打我啊
         
-        return show_message(request, '付款成功!')
+        return HttpResponseRedirect(reverse('goods.views.show_manage'))
     except Exception as e:
         return show_message(request, 'Accept purchase failed: '+e.__str__())
 
