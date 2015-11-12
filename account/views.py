@@ -1,5 +1,5 @@
 import json
-import ldap
+#import ldap
 
 from django.shortcuts import render, render_to_response
 from django.http import Http404, HttpResponseRedirect, HttpResponse
@@ -44,46 +44,46 @@ perms_map = {'normal':normal_perms,
 #===============================================
 #===============================================
 #===============================================
-def ldap_add(username, password):
-    l = ldap.open(LDAP_HOST)
-    l.protocol_version = ldap.VERSION3
-    l.simple_bind(LDAP_BIND, LDAP_PASS)
-
-    pw = password
-    addDN = "cn=%s,ou=People,dc=vpsee,dc=com" % cn
-    attrs = {}
-    attrs['objectclass'] = ['top','person','inetOrgPerson','posixAccount','vpseeAccount']
-    attrs['pw'] = pw
-    attrs['homeDirectory'] = '/home/people/%s' % username
-    attrs['loginShell'] = '/bin/bash'
-    attrs['uid'] = username
-    attrs['uidNumber'] = ldap_newuid()
-    attrs['gidNumber'] = ldap_getgid()
-    attrs['active'] = 'TRUE'
-    ldif = modlist.addModlist(attrs)
-    l.add_s(addDN, ldif)
-    l.unbind_s()
-
-def ldap_getpw(username):
-    try:
-        l = ldap.open(LDAP_HOST)
-        l.protocol_version = ldap.VERSION3
-        l.simple_bind(LDAP_BIND, LDAP_PASS)
-
-        searchScope = ldap.SCOPE_SUBTREE
-        searchFilter = "uid=*" + username + "*"
-        resultID = l.search(LDAP_BASE, searchScope, searchFilter, None)
-        result_set = []
-        while 1:
-            result_type, result_data = l.result(resultID, 0)
-            if (result_data == []):
-                break
-            else:
-                if result_type == ldap.RES_SEARCH_ENTRY:
-                    result_set.append(result_data)
-        return result_set[0][0][1]['pw'][0]
-    except ldap.LDAPError, e:
-        print e
+# def ldap_add(username, password):
+#     l = ldap.open(LDAP_HOST)
+#     l.protocol_version = ldap.VERSION3
+#     l.simple_bind(LDAP_BIND, LDAP_PASS)
+#  
+#     pw = password
+#     addDN = "cn=%s,ou=People,dc=vpsee,dc=com" % cn
+#     attrs = {}
+#     attrs['objectclass'] = ['top','person','inetOrgPerson','posixAccount','vpseeAccount']
+#     attrs['pw'] = pw
+#     attrs['homeDirectory'] = '/home/people/%s' % username
+#     attrs['loginShell'] = '/bin/bash'
+#     attrs['uid'] = username
+#     attrs['uidNumber'] = ldap_newuid()
+#     attrs['gidNumber'] = ldap_getgid()
+#     attrs['active'] = 'TRUE'
+#     ldif = modlist.addModlist(attrs)
+#     l.add_s(addDN, ldif)
+#     l.unbind_s()
+#  
+# def ldap_getpw(username):
+#     try:
+#         l = ldap.open(LDAP_HOST)
+#         l.protocol_version = ldap.VERSION3
+#         l.simple_bind(LDAP_BIND, LDAP_PASS)
+#  
+#         searchScope = ldap.SCOPE_SUBTREE
+#         searchFilter = "uid=*" + username + "*"
+#         resultID = l.search(LDAP_BASE, searchScope, searchFilter, None)
+#         result_set = []
+#         while 1:
+#             result_type, result_data = l.result(resultID, 0)
+#             if (result_data == []):
+#                 break
+#             else:
+#                 if result_type == ldap.RES_SEARCH_ENTRY:
+#                     result_set.append(result_data)
+#         return result_set[0][0][1]['pw'][0]
+#     except ldap.LDAPError, e:
+#         print e
 
 
 
@@ -202,8 +202,8 @@ def do_signin(request):
 
             if not username or not password:
                 return HttpResponse('mismatch')
-            if not password = ldap_getpw(password):
-                return HttpResponse('mismatch')
+#            if not password = ldap_getpw(password):
+#                return HttpResponse('mismatch')
             user = authenticate(username=username, password=password)
             if not user or not user.is_active:
                 return HttpResponse('mismatch')
@@ -282,7 +282,7 @@ def do_signup(request):
            return HttpResponse('failed')
         new_account['school_id'] = schid
 
-        ldap_add(username, password)
+#        ldap_add(username, password)
     except Exception as e:
         print(e)
         return HttpResponse('failed')
