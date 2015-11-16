@@ -74,6 +74,16 @@ def get_purchase_destroy_context_log(lg):
     sgl = lg.target
     good = sgl.goods
     tp = good.gtype    
+    try:
+        pur = Purchase.objects.get(single=sgl)
+        dc['manufacturer'] = pur.manufacturer
+        dc['version'] = pur.version
+        dc['other'] = pur.other
+    except Exception as e:
+        pass
+        
+    dc['gtype'] = tp.name
+    
     props = []
     for i in range(0,tp.get_pronum()):
         props.append({'pro_name':tp.get_proname(i),

@@ -14,6 +14,7 @@
           <th>时间</th>
           <th>操作者</th>
           <th>操作对象</th>
+          <th>类型</th>
           <th>动作</th>
           <th>描述</th>
         </tr>
@@ -23,7 +24,15 @@
           <tr>
             <td>{{ item.time }}</td>
             <td>{{ item.actor }}</td>
-            <td>{{ item.target }}    <div class="ui basic button tiny tip" data-variation="inverted" data-html='
+            <td>{{ item.target }}  </td>
+           	<td>{{ item.gtype }} </td>
+           	<td>
+             <div class="ui basic button tiny tip" data-variation="inverted" data-html='
+            {% if item.manufacturer %}
+            		<div class="ui label" style="margin-top:5px">厂商 : {{ item.manufacturer }}</div>
+					<div class="ui label" style="margin-top:5px">型号 : {{ item.version }} </div>
+					<div class="ui label" style="margin-top:5px">其他: {{ item.other }}</div>
+			{% endif %}
                 {% for pro in item.prop %}
                   {% if pro.pro_name != "" %}
                   <div class="ui label" style="margin-top:5px">{{ pro.pro_name }}: {{ pro.pro_value }}</div>
